@@ -6,13 +6,8 @@ const port = process.env.PORT || 3001;
 app.use(express.static("./client/build"));
 app.use(express.json());
 
-// Dependancies
-const db = require('./database/db')
-
-// Controllers
-const controllerName = require('./controller/set-later');
-
 // Database
+const db = require('./database/db')
 app.use(
     expressSession({
         store: new pgSession({
@@ -30,6 +25,9 @@ app.use((request, res, next) => {
     console.log(`*** Request method: ${request.method} and route: ${request.path} at ${new Date()} ***`)
     next();
 })
+
+// Controllers
+const controllerName = require('./controller/set-later');
 
 // API Routing
 app.use('/set/later', controllerName);
