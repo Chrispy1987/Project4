@@ -1,0 +1,35 @@
+#content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#content-left, #content-right {
+    min-width: 300px;
+    height: 500px;
+    margin: 50px;
+}
+#content-left {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    background-color: orange;
+}
+#content-left #text {
+    font-weight: bold;
+    font-size: 22px;
+    padding: 15px;
+    margin-bottom: 50px;
+}
+#content-left #sign-up {
+    width: 220px;
+    font-size: 22px;
+    padding: 15px;
+    margin: 0 0 30px 30px;
+    background-color: cornflowerblue;
+}
+#content-right {
+    width: 40%;
+    background-color: aqua;
+}
