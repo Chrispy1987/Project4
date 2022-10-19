@@ -15,15 +15,16 @@ export const Login = (props) => {
         // check db to see if username & password match
         axios.post('/user/session', data)
         .then((dbRes) => {
-            const message = dbRes.data.message
-            props.handleToast(message)
+            const res = dbRes.data
+            props.handleToast(res.message)
+            res.id &&
+                setTimeout(() => {
+                 props.setSession(res.id)
+                 window.location.href = '/home'   
+                }, 3000)                          
         })
         .catch((err) => {
-            if (err.response.status === 500) {
-                props.handleToast('Something went wrong. Please try again.');              
-            } else {
-            //    
-            }
+            err.response.status === 500 && props.handleToast('Something went wrong. Please try again.');              
         });
     }
 

@@ -25,10 +25,13 @@ nav {
   flex-wrap: nowrap;
   z-index: 99;
 }
+.nav-bar-logged-in {
+  background-color: var(--pallette-two);
+}
 .nav_buttons {
   margin: 0 10px;
 }
-#logo {
+.logo {
   font-size: 45px;
   margin: 15px 40px;
   font-family: 'Fredoka One', cursive;
@@ -37,6 +40,10 @@ nav {
   color: var(--pallette-one);
   text-shadow: 4px 4px rgba(6, 199, 216, 0.5);
   background-color: transparent;
+}
+.logo-logged-in {
+  color: white;
+  text-shadow: 4px 4px var(--pallette-one);
 }
 #sign-up, #log-in {
   padding: 10px 15px;
