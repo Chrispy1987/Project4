@@ -5,6 +5,7 @@
   "author": "Chris HS <chris.p90@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "connect-pg-simple": "^7.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",

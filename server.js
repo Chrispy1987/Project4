@@ -27,10 +27,10 @@ app.use((request, res, next) => {
 })
 
 // Controllers
-const controllerName = require('./controller/set-later');
+const usersController = require('./controller/users');
 
 // API Routing
-app.use('/set/later', controllerName);
+app.use('/user/session', usersController);
 
 // Port
 app.listen(port, () => {
