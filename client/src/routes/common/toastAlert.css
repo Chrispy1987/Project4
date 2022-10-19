@@ -1,0 +1,56 @@
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+    
+}
+.toast-alert {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 99;
+    min-width: 300px;
+    text-align: center;
+    bottom: 0px;
+    left:  50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: rgb(255, 224, 47);
+}
+.toast-alert > img {
+    height: 25px;
+    margin-left: 20px;
+    cursor: pointer;
+    box-sizing: content-box;
+}
+.toast-alert > img:hover {
+    border: solid black 3px;
+    border-radius: 45px;
+}
+.toast-alert > p {
+    font-size: 16px;
+    text-align: center;
+}
+.fade-in {
+    opacity: 1;
+    animation: fadeIn 0.5s ease-in; 
+}
+.fade-out {
+    opacity: 0;
+    animation: fadeOut 0.5s ease-in;
+}
