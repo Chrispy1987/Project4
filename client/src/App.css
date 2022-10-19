@@ -1,19 +1,42 @@
-.App {
-  text-align: center;
+* {
+  padding: 0;
+  margin: 0;
 }
+/* COLOR THEMES*/
+:root {
+  --pallette-one: #363f74; 
+  --pallette-one-hover: #5664af;
+  --pallette-two: rgb(51, 114, 110);
+  --pallette-two-hover: rgb(119, 198, 193);
+  --pallette-three: #663982; 
+  --pallette-three-hover: #9862b9; 
+  --pallette-four: orange;
+  --pallette-four-hover: rgb(229, 199, 144);
+  --error: #dc143c; 
+  --success: #3df505; 
+}
+/* NAV BAR */
 nav {
+  position: fixed;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: nowrap;
-  background-color: yellow;
+  z-index: 99;
 }
 .nav_buttons {
   margin: 0 10px;
 }
 #logo {
-  font-size: 30px;
-  margin: 20px;
+  font-size: 45px;
+  margin: 15px 40px;
+  font-family: 'Fredoka One', cursive;
+  border: none;
+  cursor: pointer;
+  color: var(--pallette-one);
+  text-shadow: 4px 4px rgba(6, 199, 216, 0.5);
+  background-color: transparent;
 }
 #sign-up, #log-in {
   padding: 10px 15px;
@@ -22,7 +45,7 @@ nav {
   cursor: pointer;
 }
 #log-in {
-  color: rgb(50, 148, 141);
+  color: var(--pallette-two);
   border: none;
   margin-right: 10px;
   background-color: transparent;
@@ -30,5 +53,12 @@ nav {
 #sign-up {
   color: white;
   margin-right: 20px;
-  background-color: rgb(50, 148, 141);
+  background-color: var(--pallette-two);
+}
+#sign-up:hover {
+  background-color: var(--pallette-two-hover);
+}
+.spacer {
+  height: 150px;
+  position: relative;
 }
