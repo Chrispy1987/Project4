@@ -1,23 +1,45 @@
 import './login.css'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import userIcon from  '../../assets/user_icon.png'
+import pwIcon from '../../assets/pw_icon.png'
 import axios from 'axios';
 
-export const Login = () => {
+export const Login = (props) => {
+
+    const handleLogin = (event) => {
+        event.preventDefault(); 
+        const formData = new FormData(event.target);
+        const data = {
+            email: formData.get('email'),
+            password: formData.get('password')
+        };
+        // check db to see if username & password match
+        axios.post('/user/session', data)
+        .then((dbRes) => {
+            const message = dbRes.data.message
+            props.handleToast(message)
+        })
+        .catch((err) => {
+            if (err.response.status === 500) {
+                props.handleToast('Something went wrong. Please try again.');              
+            } else {
+            //    
+            }
+        });
+    }
 
     return (
         <div className='login-container'>
-            <h2>- LOG IN -</h2>
-            <form id='login-form'>                
-                <div class='login-frame'>
-                    <img className='login-icon' src='../../assets/user_icon.png'/>
-                    <input type='email' placeholder='Enter email...' name='email' required/>
+            <h2 className="subheading">~ Log in ~</h2>
+            <form id='login-form' onSubmit={event => handleLogin(event)}>                
+                <div className='login-frame'>
+                    <img className='login-icon' src={userIcon} alt='user icon'/>
+                    <input type='email' placeholder='Email address' name='email' required/>
                 </div>
-                <div class='login-frame'>
-                    <img className='login-icon' src="../../assets/pw_icon.png"/>
-                    <input type='password' placeholder='Enter password...' name='password' required/>
+                <div className='login-frame'>
+                    <img className='login-icon' src={pwIcon} alt='password icon'/>
+                    <input type='password' placeholder='Password' name='password' required/>
                 </div>
-                <Link to='/home'><button className='login-button'>Login</button></Link>             
+                <button className='login-button'>Login</button>
             </form>
         </div>
     )
