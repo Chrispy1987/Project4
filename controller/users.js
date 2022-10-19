@@ -24,4 +24,15 @@ router.post('/', (request, response) => {
         .catch(() => response.sendStatus(500))
 })
 
+// Logout user
+router.delete('/', (request, response) => {
+    const userExists = request.session.user_id
+    if (userExists) {
+        request.session.destroy()
+        return response.json({})
+    } else {
+        return response.status(400).json({ message: 'No users are logged in. How did you get here!?' })
+    }
+});
+
 module.exports = router;
