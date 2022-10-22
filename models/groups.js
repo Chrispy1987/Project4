@@ -2,7 +2,11 @@ const db = require("../database/db");
 
 const Groups = {
   getGroupsUserIsIn: (userId) => {
-    const sql = 'SELECT group_id FROM members WHERE user_id=$1'
+    const sql = `
+      SELECT group_id 
+      FROM members 
+      WHERE user_id=$1
+      `
     return db.query(sql, [userId])
       .then(dbRes => dbRes)
   },
@@ -27,21 +31,35 @@ const Groups = {
         .then(dbRes => dbRes)
   },
   deleteGroup: (groupId) => {
-    const sql = 'DELETE FROM groups WHERE group_id=$1'
+    const sql = `
+      DELETE FROM groups 
+      WHERE group_id=$1
+      `
     return db.query(sql, [groupId])
+  },
+  createGroup: (ownerId, name, groupId) => {
+    const sql = `       
+      INSERT INTO groups(user_id, name, settled)
+      VALUES($1, $2, null)
+      RETURNING group_id
+      `
+      return db.query(sql, [ownerId, name])
+        .then(dbRes => dbRes)    
+  },
+  assignMember: (groupId, userId) => {
+    const sql = `
+      INSERT INTO members(group_id, user_id)
+      VALUES($1, $2)
+      `
+    return db.query(sql, [groupId, userId])
+  },
+  updateGroupName: (name, groupId) => {
+    const sql=`      
+      UPDATE groups SET name = $1 
+      WHERE group_id = $2
+      `
+    return db.query(sql, [name, groupId])
   }
-  // getGroupData: (groupId) => {
-  //   console.log('get group data', groupId)
-  //   const sql = `
-  //   SELECT groups.group_id, groups.user_id AS owner_id, groups.name, groups.settled, expense.user_id AS payer, expense.expense_id, expense.amount AS total_amount, expense.date, expense.icon, expense.description, borrower.user_id AS borrower_id, borrower.amount AS borrower_portion
-  //   FROM groups
-  //   INNER JOIN expense ON groups.group_id = expense.group_id
-  //   INNER JOIN borrower ON expense.expense_id = borrower.expense_id    
-  //   WHERE groups.group_id=$1
-  //   `
-  //   return db.query(sql, [groupId])
-  //     .then(dbRes => dbRes)
-  // },
 }
 
 module.exports = Groups;
