@@ -28,9 +28,13 @@ app.use((request, res, next) => {
 
 // Controllers
 const usersController = require('./controller/users');
+const groupsController = require('./controller/groups');
+
 
 // API Routing
 app.use('/user/session', usersController);
+app.use('/user/groups', groupsController)
+
 
 // Port
 app.listen(port, () => {
