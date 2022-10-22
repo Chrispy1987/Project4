@@ -2,7 +2,6 @@ import './App.css';
 import './routes/common/toastAlert.css'
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { helper } from './js/components/helper'
 import { LandingPage } from './routes/landingPage/landingPage'
 import { Login } from './routes/login/login'
 import { SignUp } from './routes/signUp/signUp'
@@ -69,15 +68,15 @@ function App() {
           {!session ?
             // NOT LOGGED IN
             <Routes>
-                <Route path="/" element={<LandingPage key={helper.getKey()}/>} />
-                <Route path="/login" element= {<Login key={helper.getKey()} handleToast={handleToast} setSession={setSession} />}/>
-                <Route path="/signup" element={<SignUp key={helper.getKey()}/>} />                
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element= {<Login handleToast={handleToast} setSession={setSession} />}/>
+                <Route path="/signup" element={<SignUp />} />                
             </Routes>
             :
             // LOGGED IN
             <Routes>
-              <Route path="/" element={<Home key={helper.getKey()} handleToast={handleToast} session={session}/>} />
-              <Route path="/create" element={<NewGroup key={helper.getKey()} handleToast={handleToast} session={session}/>} />
+              <Route path="/" element={<Home handleToast={handleToast} session={session}/>} />
+              <Route path="/create" element={<NewGroup handleToast={handleToast} session={session}/>} />
             </Routes>
           }
         </section>  
