@@ -5,29 +5,28 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 
 export const Login = (props) => {
-    const handleLogin = (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault(); 
         const formData = new FormData(event.target);
         const data = {
             email: formData.get('email'),
             password: formData.get('password')
         };
-
-        axios.post('/user/session', data)
-        .then((dbRes) => {
-            const response = dbRes.data
-            response.userId &&
-                props.handleToast(response.toast)
-                setTimeout(() => {
-                    props.setSession(response.userId)
-                    window.location.href = '/'
-                }, 2000);
-        })
-        .catch((err) => {
-            err.response.status === 500 
+        let dbRes;
+        try {
+            dbRes = await axios.post('/user/session', data);
+        } catch (e) {
+            e.response.status === 500 
             ? props.handleToast('We are having trouble retrieving your account. Please try again later!')
-            : props.handleToast(err.response.data.toast)
-        });
+            : props.handleToast(e.response.data.toast)
+        }
+        const response = dbRes.data
+        response.userId &&
+            props.handleToast(response.toast)
+            setTimeout(() => {
+                props.setSession(response.userId)
+                window.location.href = '/'
+            }, 1000);
     }
 
     return (
