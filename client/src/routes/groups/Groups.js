@@ -32,7 +32,7 @@ export const Groups = (props) => {
                     <p>MEMBERS:
                     {memberState && 
                     memberState.map((member, index) => {
-                            return <span key={index}> {helper.capitaliseFirstLetter(member.username)}{index < memberState.length -1 ? ', ': ''}</span>})
+                            return <span key={index}> {helper.capitaliseFirstLetter(member.username)}{index < memberState.length -1 && ', '}</span>})
                     }
                     </p>
                 </div>
