@@ -8,7 +8,7 @@ const Groups = {
   },
   getGroupData: (groupId) => {
     const sql = `
-      SELECT groups.group_id, users.username AS owner, groups.user_id AS ownerId, groups.name, groups.settled 
+      SELECT groups.group_id, users.username AS owner, groups.user_id AS owner_id, groups.name, groups.settled 
       FROM groups 
       INNER JOIN users ON groups.user_id = users.user_id
       WHERE groups.group_id=$1
@@ -17,9 +17,18 @@ const Groups = {
       .then(dbRes => dbRes)
   },
   getGroupMemberIds: (groupId) => {
-      const sql = 'SELECT user_id FROM members WHERE group_id=$1'
+      const sql = `
+      SELECT members.user_id, users.username
+      FROM members 
+      INNER JOIN users ON members.user_id = users.user_id
+      WHERE group_id=$1      
+      `
       return db.query(sql, [groupId])
         .then(dbRes => dbRes)
+  },
+  deleteGroup: (groupId) => {
+    const sql = 'DELETE FROM groups WHERE group_id=$1'
+    return db.query(sql, [groupId])
   }
   // getGroupData: (groupId) => {
   //   console.log('get group data', groupId)

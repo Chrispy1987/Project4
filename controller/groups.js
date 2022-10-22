@@ -45,4 +45,13 @@ router.get('/:groupId', (request, response) => {
         });
 });
 
+// Delete group, providing user is the group owner
+router.delete('/:groupId', (request, response) => {
+    const groupId = request.params.groupId;
+    Groups.deleteGroup(groupId)
+        .then(() => {
+            return response.json({ success: true, toast: 'Group deleted successfully!'})
+        })
+});
+
 module.exports = router;

@@ -14,8 +14,10 @@ INSERT INTO users(username, email, password, security_qn, security_ans, is_admin
 TRUNCATE groups restart identity cascade;
 INSERT INTO groups(user_id, name, settled) VALUES
 (1, 'Test Group #1', null),
-(2, 'Test Group #2', null),
-(3, 'Test Group #3', null);
+(1, 'Test Group #2', null),
+(1, 'Test Group #3', null),
+(1, 'Test Group #4', null),
+(1, 'Test Group #5', null);
 
 TRUNCATE members restart identity cascade;
 INSERT INTO members(group_id, user_id) VALUES
@@ -25,7 +27,10 @@ INSERT INTO members(group_id, user_id) VALUES
 (2, 2),
 (2, 3),
 (3, 1),
-(3, 4);
+(3, 3),
+(3, 4),
+(4, 1),
+(5, 1);
 
 TRUNCATE expense restart identity cascade;
 INSERT INTO expense(group_id, user_id, amount, date, icon, description) VALUES

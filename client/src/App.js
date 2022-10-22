@@ -2,17 +2,19 @@ import './App.css';
 import './routes/common/toastAlert.css'
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { helper } from './js/components/helper'
 import { LandingPage } from './routes/landingPage/landingPage'
 import { Login } from './routes/login/login'
 import { SignUp } from './routes/signUp/signUp'
 import { Home } from './routes/home/home'
 import { ToastAlert } from './routes/common/toastAlert'
 import { Logout } from './routes/logout/logout'
+import { NewGroup } from './routes/newgroup/NewGroup'
 
 
 function App() {
 
-  const [session, setSession] = useState(localStorage.getItem('user_id'))
+  const [session, setSession] = useState(Number(localStorage.getItem('user_id')))
   const [toast, setToast] = useState(null)
 
   // toast pop-up control
@@ -23,14 +25,14 @@ function App() {
     }
     let toastTimerId = setTimeout(() => {
       setToast(null)
-    }, 5000)
+    }, 3500)
     return () => {
         clearTimeout(toastTimerId)
     }}, [toast])
 
     // tracking state of logged in user
     useEffect(() => {
-      let userId = localStorage.getItem('user_id');
+      let userId = Number(localStorage.getItem('user_id'));
       if (userId === session) {
         return
       } else {
@@ -50,11 +52,14 @@ function App() {
             <Link to='/'><button className={session ? 'logo logo-logged-in' : 'logo'}>Yewomi</button></Link>
             {!session ?
               <div id="nav-buttons">
-                  <Link to='/login'><button id='log-in'>Log in</button></Link>
-                  <Link to='/signup'><button id='sign-up'>Sign up</button></Link>
+                  <Link to='/login'><button className='button-v1'>Log in</button></Link>
+                  <Link to='/signup'><button className='button-v2'>Sign up</button></Link>
               </div>
               :
-              <Logout handleToast={handleToast} setSession={setSession}/>    
+              <div>
+                <Logout handleToast={handleToast} setSession={setSession}/>
+                <button>BURGER DROPDOWN</button> 
+              </div>    
             }           
         </nav>
         <div className='spacer'>
@@ -62,14 +67,17 @@ function App() {
         </div>
         <section>
           {!session ?
+            // NOT LOGGED IN
             <Routes>
-                <Route path="/" element={<LandingPage/>} />
-                <Route path="/login" element= {<Login handleToast={handleToast} setSession={setSession} />}/>
-                <Route path="/signup" element={<SignUp/>} />                
+                <Route path="/" element={<LandingPage key={helper.getKey()}/>} />
+                <Route path="/login" element= {<Login key={helper.getKey()} handleToast={handleToast} setSession={setSession} />}/>
+                <Route path="/signup" element={<SignUp key={helper.getKey()}/>} />                
             </Routes>
             :
+            // LOGGED IN
             <Routes>
-              <Route path="/" element={<Home handleToast={handleToast} userId={session}/>} />
+              <Route path="/" element={<Home key={helper.getKey()} handleToast={handleToast} session={session}/>} />
+              <Route path="/create" element={<NewGroup key={helper.getKey()} handleToast={handleToast} session={session}/>} />
             </Routes>
           }
         </section>  
