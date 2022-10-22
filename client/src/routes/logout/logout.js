@@ -1,3 +1,4 @@
+import './logout.css'
 import axios from 'axios'
 
 // Log user out and remove session data
@@ -18,8 +19,7 @@ export const Logout = (props) => {
 
     return (
         <div>
-            <button onClick={handleLogout}>LOGOUT</button>
-            <button>BURGER DROPDOWN</button>
+            <button onClick={handleLogout} className='button-v3'>LOGOUT</button>
         </div>
     )
 }

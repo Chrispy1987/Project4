@@ -1,5 +1,5 @@
-# Project4
+# Project4 - YEWOMI - An expense sharing web app
 
-This app is hosted at: [Project 4 Name](https://stormy-caverns-85809.herokuapp.com/)
+This app is hosted at: [>> Yewomi <<](https://stormy-caverns-85809.herokuapp.com/)
 
-by Chris Holliday-Smith
+developed by Chris Holliday-Smith

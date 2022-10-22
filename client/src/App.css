@@ -45,24 +45,28 @@ nav {
   color: white;
   text-shadow: 4px 4px var(--pallette-one);
 }
-#sign-up, #log-in {
+.button-v1, .button-v2, .button-v3  {
   padding: 10px 15px;
   font-weight: bold;
   font-size: 18px;
   cursor: pointer;
 }
-#log-in {
+.button-v1 {
   color: var(--pallette-two);
   border: none;
   margin-right: 10px;
   background-color: transparent;
 }
-#sign-up {
+.button-v2 {
   color: white;
   margin-right: 20px;
   background-color: var(--pallette-two);
 }
-#sign-up:hover {
+.button-v3 {
+  color: var(--pallette-two);
+  background-color: white;  
+}
+.button-v2:hover {
   background-color: var(--pallette-two-hover);
 }
 .spacer {

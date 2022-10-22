@@ -1,10 +1,11 @@
 const bcrypt = require('bcrypt');
 
+// encrypt password to store in db
 const generateHash = (password) => {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
 }
+// compare passwords
 const isValidPassword = (plainTextPassword, passwordHash) => {
-    // Returns true or false
     return bcrypt.compareSync(plainTextPassword, passwordHash)
 }
 
