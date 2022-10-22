@@ -2,9 +2,9 @@ import './login.css'
 import userIcon from  '../../assets/user_icon.png'
 import pwIcon from '../../assets/pw_icon.png'
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 
 export const Login = (props) => {
-
     const handleLogin = (event) => {
         event.preventDefault(); 
         const formData = new FormData(event.target);
@@ -12,19 +12,21 @@ export const Login = (props) => {
             email: formData.get('email'),
             password: formData.get('password')
         };
-        // check db to see if username & password match
+
         axios.post('/user/session', data)
         .then((dbRes) => {
-            const res = dbRes.data
-            props.handleToast(res.message)
-            res.id &&
+            const response = dbRes.data
+            response.userId &&
+                props.handleToast(response.toast)
                 setTimeout(() => {
-                 props.setSession(res.id)
-                 window.location.href = '/home'   
-                }, 3000)                          
+                    props.setSession(response.userId)
+                    window.location.href = '/'
+                }, 2000);
         })
         .catch((err) => {
-            err.response.status === 500 && props.handleToast('Something went wrong. Please try again.');              
+            err.response.status === 500 
+            ? props.handleToast('We are having trouble retrieving your account. Please try again later!')
+            : props.handleToast(err.response.data.toast)
         });
     }
 

@@ -7,7 +7,7 @@ import { Login } from './routes/login/login'
 import { SignUp } from './routes/signUp/signUp'
 import { Home } from './routes/home/home'
 import { ToastAlert } from './routes/common/toastAlert'
-import { logout } from './routes/logout/logout'
+import { Logout } from './routes/logout/logout'
 
 
 function App() {
@@ -38,8 +38,8 @@ function App() {
       }      
     }, [session])
 
-  const handleToast = message => {
-    message === 'close' ? setToast(null) : setToast(message);
+  const handleToast = toast => {
+    toast === 'close' ? setToast(null) : setToast(toast);
   }
   
   return (
@@ -54,11 +54,11 @@ function App() {
                   <Link to='/signup'><button id='sign-up'>Sign up</button></Link>
               </div>
               :
-              <div><button onClick={logout}>LOGOUT</button>[REFLECT LOGGED IN DROPDOWN HERE]</div>
+              <Logout handleToast={handleToast} setSession={setSession}/>    
             }           
         </nav>
         <div className='spacer'>
-          <ToastAlert message={toast} handleToast={handleToast} />
+          <ToastAlert toast={toast} handleToast={handleToast} />
         </div>
         <section>
           {!session ?
@@ -69,7 +69,7 @@ function App() {
             </Routes>
             :
             <Routes>
-              <Route path="/home" element={<Home/>} />
+              <Route path="/" element={<Home handleToast={handleToast} userId={session}/>} />
             </Routes>
           }
         </section>  

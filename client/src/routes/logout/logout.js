@@ -1,17 +1,25 @@
 import axios from 'axios'
 
 // Log user out and remove session data
-export const logout = () => {
-    axios.delete('/user/session/')
-    .then(() => {
-        localStorage.clear();
-        window.location.href = '/'; 
-        })
-    .catch(err => {
-        if (err.response.status === 500) {
-            alert('An unknown error occured. Please try again')
-        } else {
-            alert(err.message)
-        }
-    });
+export const Logout = (props) => {
+    const handleLogout = () => {
+        axios.delete('/user/session/')
+        .then(() => {
+            localStorage.clear();
+            props.setSession(null)
+            props.handleToast('Logged out successfully')  
+            })
+        .catch(err => {
+            err.response.status === 500 
+            ? props.handleToast('An error occured when logging user out!')
+            : props.handleToast(err.response.data.toast)  
+        });
+    }
+
+    return (
+        <div>
+            <button onClick={handleLogout}>LOGOUT</button>
+            <button>BURGER DROPDOWN</button>
+        </div>
+    )
 }

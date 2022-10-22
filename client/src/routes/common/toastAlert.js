@@ -2,24 +2,24 @@ import './toastAlert.css'
 import { useState, useEffect } from 'react'
 
 
-// When props.message goes from null to a message we want to fade-in
+// When props.toast goes from null to a toast we want to fade-in
 // when it goes back to null we need to fade out.
-// During fade out we cannot use props.message because it is currently null, 
+// During fade out we cannot use props.toast because it is currently null, 
 // so we need to store a previous value (textToDisplay)
 export const ToastAlert = (props) => {
     const [textToDisplay, setTextToDisplay] = useState(null);
     const [fadeState, setFadeState] = useState('off');
 
     useEffect(() => {
-         if (!textToDisplay && props.message) {
+         if (!textToDisplay && props.toast) {
             setFadeState('fade-in');
-            setTextToDisplay(props.message);
-        } else if (textToDisplay && !props.message) {
+            setTextToDisplay(props.toast);
+        } else if (textToDisplay && !props.toast) {
             setFadeState('fade-out');
         } else {
-            setTextToDisplay(props.message);
+            setTextToDisplay(props.toast);
         }
-    }, [props.message, textToDisplay]);
+    }, [props.toast, textToDisplay]);
 
     if (fadeState === 'off') {
         return null; 
