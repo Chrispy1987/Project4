@@ -10,7 +10,7 @@ export const Groups = (props) => {
     // get group members
     useEffect(() => {
         const groupId = props.groupId;
-        axios.get(`/user/groups/${groupId}`)
+        axios.get(`/groups/${groupId}`)
             .then((dbRes) => {
                 const members = dbRes.data.members;
                 setMemberState(members);
