@@ -1,0 +1,4 @@
+#invite-container {
+    opacity: 0;
+    animation: fade-in 0.5s linear 0.5s 1 normal forwards;
+}

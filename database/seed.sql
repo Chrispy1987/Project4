@@ -13,22 +13,17 @@ INSERT INTO users(username, email, password, security_qn, security_ans, is_admin
 
 TRUNCATE groups restart identity cascade;
 INSERT INTO groups(user_id, name, settled) VALUES
-(1, 'Test Group #1', null),
-(1, 'Test Group #2', null),
-(1, 'Test Group #3', null),
-(1, 'Test Group #4', null),
-(1, 'Test Group #5', null);
+(1, 'TEST GROUP #1', null),
+(1, 'TEST GROUP #2', null),
+(1, 'TEST GROUP #3', null),
+(1, 'TEST GROUP #4', null),
+(2, 'TEST GROUP #5', null);
 
 TRUNCATE members restart identity cascade;
 INSERT INTO members(group_id, user_id) VALUES
 (1, 1),
-(1, 2),
 (2, 1),
-(2, 2),
-(2, 3),
 (3, 1),
-(3, 3),
-(3, 4),
 (4, 1),
 (5, 1);
 
@@ -50,3 +45,21 @@ INSERT INTO borrower(expense_id, user_id, amount) VALUES
 (3, 3, 8000),
 (5, 3, 12500),
 (6, 4, 999999);
+
+TRUNCATE invites restart identity cascade;
+INSERT INTO invites(group_id, user_id, inviter) VALUES
+(1, 2, 1),
+(2, 2, 1),
+(3, 2, 1),
+(4, 2, 1),
+(5, 1, 1),
+(1, 3, 1),
+(2, 3, 1),
+(3, 3, 1),
+(4, 3, 1),
+(5, 3, 1),
+(1, 4, 1),
+(2, 4, 1),
+(3, 4, 1),
+(4, 4, 1),
+(5, 4, 1);

@@ -3,48 +3,88 @@ import axios from 'axios';
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { Groups } from '../groups/Groups'
+import { Invites } from '../invites/Invites'
 import { helper } from '../../js/components/helper'
 
 export const Home = (props) => {
     const [groupState, setGroupState] = useState(null)
-    const [refreshState, setRefreshState] = useState(0)
+    const [triggerGroup, setTriggerGroup] = useState(0)
+    const [inviteState, setInviteState] = useState(null)
+    const [triggerInvite, setTriggerInvite] = useState(0)
 
+    const userId = props.session;
+    
     // Get groups that the user belongs to
     useEffect(() => {
-        const userId = props.session;
-        axios.get(`/user/groups/member/${userId}`)
+        axios.get(`/groups/member/${userId}`)
             .then((dbRes) => {                
                 const groups = dbRes.data.groups;
                 setGroupState(groups)
             })
-            .catch((err) => {
-                err.response.status === 500 
+            .catch(e => {
+                e.response.status === 500 
                 ? props.handleToast('We are having trouble retrieving your groups. Please try again later!')
-                : props.handleToast(err.response.data.toast)
+                : props.handleToast(e.response.data.toast)
             })
-    }, [refreshState])
+    }, [triggerGroup])
+
+    // Check for pending group invites
+    useEffect(() => {
+        axios.get(`/groups/invite/${userId}`)
+            .then((dbRes) => {                
+                const invites = dbRes.data.invites;
+                setInviteState(invites)
+                console.log(invites)
+            })
+            .catch(e => {
+                e.response.status === 500 
+                ? props.handleToast('We are having trouble retrieving your pending invites. Please try again later!')
+                : props.handleToast(e.response.data.toast)
+            })
+    }, [triggerInvite])
 
     // Delete target group and refresh UI
     const handleGroupDeletion = async (event, groupId) => {
         if (event.target.textContent === 'Delete Group') {
             event.target.textContent = 'Confirm Delete';
+            event.target.style.color = 'red';
             setTimeout(() => {
                 event.target.textContent = 'Delete Group';
-            }, 2000);            
+                event.target.style.color = 'black';
+            }, 3000);            
         } else {
             try {
-                const dbRes = await axios.delete(`user/groups/${groupId}`)
+                const dbRes = await axios.delete(`groups/${groupId}`)
                 props.handleToast(dbRes.data.toast)
-                setRefreshState(refreshState + 1)    
+                setTriggerGroup(triggerGroup + 1)    
             } catch (e) {
-                props.handleToast(e)        
+                props.handleToast(e)
             }
         }
     };
 
     return (
         <div className='grid'>
-            <div className='grid-col1'>
+            <div className='grid-col1'>                
+                <div className='pending-invites'>
+                    {inviteState && <h2>PENDING INVITES</h2>}
+                    {inviteState && inviteState.map(invite => {
+                            return (
+                                <Invites
+                                    key={invite.invite_id}
+                                    groupId={invite.group_id}
+                                    inviter={invite.inviter}
+                                    session={props.session}
+                                    handleToast={() => props.handleToast()}
+                                    triggerInvite={triggerInvite}
+                                    setTriggerInvite={setTriggerInvite}
+                                    triggerGroup={triggerGroup}
+                                    setTriggerGroup={setTriggerGroup}
+                                />
+                            )
+                        })
+                    }
+                </div>
             </div>
             <div className='grid-col2'> {/* MAIN SECTION */}
                 <div className='grid-row1'>
