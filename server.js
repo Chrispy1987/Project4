@@ -33,7 +33,7 @@ const groupsController = require('./controller/groups');
 
 // API Routing
 app.use('/user/session', usersController);
-app.use('/user/groups', groupsController)
+app.use('/groups', groupsController)
 
 
 // Port

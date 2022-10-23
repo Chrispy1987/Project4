@@ -2,9 +2,11 @@ import './login.css'
 import userIcon from  '../../assets/user_icon.png'
 import pwIcon from '../../assets/pw_icon.png'
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export const Login = (props) => {
+    const navigate = useNavigate();
+
     const handleLogin = async (event) => {
         event.preventDefault(); 
         const formData = new FormData(event.target);
@@ -17,16 +19,15 @@ export const Login = (props) => {
             dbRes = await axios.post('/user/session', data);
         } catch (e) {
             e.response.status === 500 
-            ? props.handleToast('We are having trouble retrieving your account. Please try again later!')
-            : props.handleToast(e.response.data.toast)
-        }
+                ? props.handleToast('We are having trouble retrieving your account. Please try again later!')
+                : props.handleToast(e.response.data.toast)
+            return
+        }            
         const response = dbRes.data
         response.userId &&
             props.handleToast(response.toast)
-            setTimeout(() => {
-                props.setSession(response.userId)
-                window.location.href = '/'
-            }, 1000);
+            props.setSession(response.userId)
+            navigate('/')
     }
 
     return (

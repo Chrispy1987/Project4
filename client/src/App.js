@@ -10,26 +10,23 @@ import { ToastAlert } from './routes/common/toastAlert'
 import { Logout } from './routes/logout/logout'
 import { NewGroup } from './routes/newgroup/NewGroup'
 
-
 function App() {
-
   const [session, setSession] = useState(Number(localStorage.getItem('user_id')))
   const [toast, setToast] = useState(null)
 
-  // toast pop-up control
-  // (?) Any way of resetting the timer, if button is clicked again during timeOut?
+  // Toast pop-up control
   useEffect(() => {
     if (toast === null) {
       return;
     }
     let toastTimerId = setTimeout(() => {
       setToast(null)
-    }, 3500)
+    }, 2500)
     return () => {
         clearTimeout(toastTimerId)
     }}, [toast])
 
-    // tracking state of logged in user
+    // Tracking state of logged in user
     useEffect(() => {
       let userId = Number(localStorage.getItem('user_id'));
       if (userId === session) {
