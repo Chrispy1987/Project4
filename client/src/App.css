@@ -15,6 +15,19 @@
   --error: #dc143c; 
   --success: #3df505; 
 }
+/* APP */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.App {
+  opacity: 0;
+  animation: fade-in 2s linear 0.5s 1 normal forwards;
+}
 /* NAV BAR */
 nav {
   position: fixed;
