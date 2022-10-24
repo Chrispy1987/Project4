@@ -13,6 +13,7 @@ import { NewGroup } from './routes/newgroup/NewGroup'
 function App() {
   const [session, setSession] = useState(Number(localStorage.getItem('user_id')))
   const [toast, setToast] = useState(null)
+  const [panel, setPanel] = useState('groups')
 
   // Toast pop-up control
   useEffect(() => {
@@ -45,7 +46,7 @@ function App() {
       <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"></link>
       <BrowserRouter>
         <nav className={session && 'nav-bar-logged-in'}>
-            <Link to='/'><button className={session ? 'logo logo-logged-in' : 'logo'}>Yewomi</button></Link>
+            <button onClick={()=>setPanel('groups')} className={session ? 'logo logo-logged-in' : 'logo'}>Yewomi</button>
             {!session ?
               <div id="nav-buttons">
                   <Link to='/login'><button className='button-v1'>Log in</button></Link>
@@ -54,7 +55,7 @@ function App() {
               :
               <div>
                 <Logout handleToast={handleToast} setSession={setSession}/>
-                <button>BURGER DROPDOWN</button> 
+                {/* <button>BURGER DROPDOWN</button>  */}
               </div>    
             }           
         </nav>
@@ -72,8 +73,7 @@ function App() {
             :
             // LOGGED IN
             <Routes>
-              <Route path="/" element={<Home handleToast={handleToast} session={session}/>} />
-              <Route path="/create" element={<NewGroup handleToast={handleToast} session={session}/>} />
+              <Route path="/" element={<Home handleToast={handleToast} session={session} panel={panel} setPanel={setPanel}/>} />
             </Routes>
           }
         </section>  
