@@ -4,12 +4,12 @@ import axios from 'axios'
 
 export const NewGroup = (props) => {
 
-    const [count, setCount] = useState(0)
+    const [groupStatus, setGroupStatus] = useState(false)
     const [groupNumber, setGroupNumber] = useState(null)
 
     useEffect(() => {
-        console.log('group number updated', groupNumber)
-        console.log(typeof(groupNumber))
+        console.log('create group rendering')
+        groupNumber && console.log('group number created', groupNumber)
     }, [groupNumber])
 
     const handleGroupName = async (event) => {
@@ -25,16 +25,18 @@ export const NewGroup = (props) => {
                 ownerId: props.session,
                 name: userInput,
                 groupId: groupNumber
-            }   
+            }
             try {
                 const dbRes = await axios.post('/groups/new', data)
                 dbRes.data.groupId && setGroupNumber(dbRes.data.groupId)
-                setCount(count + 1)
-                console.log('COUNT', count)
+                !groupStatus && setGroupStatus(!groupStatus)
+                props.setTriggerGroup(props.triggerGroup + 1)                
             } catch(e) {
-                props.handleToast(e)
+                e.response.status === 500 
+                    ? props.handleToast('We are having trouble creating the group. Please try again later!')
+                    : props.handleToast(e.response.data.toast)
                 return
-            }                          
+            }
         }         
     }
 
@@ -59,41 +61,31 @@ export const NewGroup = (props) => {
     }
 
     return (
-        <div className='grid'>
-            <div className='grid-col1'>
-            </div>
-            <div className='grid-col2'>
-                <div className='grid-row1'>
+        <div>
+            <p>CREATE A GROUP - [user {props.session} - group {groupNumber}]</p>
+            <form>
+                <span>My group name is... </span>
+                <input onChange={event => handleGroupName(event)} id='group-name' name='groupName' placeholder='Enter group name...' maxLength='20'/>
+            </form>
+            {groupStatus > 0 && 
+                <div id='invite-container'>
+                    <p>Add up to 3 friends (enter username or email)</p>
+                    <div id='invite-forms'>
+                        <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
+                            <input onChange={event => ''} className='group-invite' name='invite' required/>
+                            <button>Invite</button>
+                        </form>
+                        <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
+                            <input onChange={event => ''} className='group-invite' name='invite' required/>
+                            <button>Invite</button>
+                        </form>
+                        <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
+                            <input onChange={event => ''} className='group-invite' name='invite' required/>
+                            <button>Invite</button>  
+                        </form>
+                    </div>
                 </div>
-                <div className='grid-row2'>
-                    <p>CREATE A GROUP - [user {props.session} - group {groupNumber}]</p>
-                    <form>
-                        <span>My group name is... </span>
-                        <input onChange={event => handleGroupName(event)} id='group-name' name='groupName' placeholder='Enter group name...' maxLength='20'/>
-                    </form>
-                    {count > 0 && 
-                        <div id='invite-container'>
-                            <p>Add up to 3 friends (enter username or email)</p>
-                            <div id='invite-forms'>
-                                <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
-                                    <input onChange={event => ''} className='group-invite' name='invite' required/>
-                                    <button>Invite</button>
-                                </form>
-                                <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
-                                    <input onChange={event => ''} className='group-invite' name='invite' required/>
-                                    <button>Invite</button>
-                                </form>
-                                <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
-                                    <input onChange={event => ''} className='group-invite' name='invite' required/>
-                                    <button>Invite</button>  
-                                </form>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-            <div className='grid-col3'>
-            </div>
+            }
         </div>
     )
 }

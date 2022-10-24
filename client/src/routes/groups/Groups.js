@@ -1,6 +1,6 @@
 import './Groups.css'
 import axios from 'axios';
-import { useState, useEfect, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { helper } from '../../js/components/helper'
 
 
@@ -37,9 +37,9 @@ export const Groups = (props) => {
                     </p>
                 </div>
                 <div id='group-buttons'>
-                    <button>View Group</button>
+                    <button onClick={()=> props.handleViewGroup(props.groupId)}>View Group</button>
                     { props.session == props.ownerId && 
-                        <button onClick={(event) => props.handleGroupDeletion(event, props.groupId)}>Delete Group</button>}
+                        <button onClick={event => props.handleGroupDeletion(event, props.groupId)}>Delete Group</button>}
                 </div>
             </div>
         </div>

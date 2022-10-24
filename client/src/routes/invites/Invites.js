@@ -33,8 +33,8 @@ export const Invites = (props) => {
 
     return (
         <div className='invites'>
-           <p>INVITED TO GROUP: {props.groupId}</p>
-           <p>INVITED BY USER: {props.inviter}</p>
+           <p>GROUP: {props.groupId}</p>
+           <p>INVITED BY: {props.inviter}</p>
            <form className='invite-decision' onSubmit={e => e.preventDefault()}>
                 <input type='hidden' name='groupId' value={props.groupId}></input>
                 <button onClick={ () => handleInviteDecision('accept')}>Accept</button>

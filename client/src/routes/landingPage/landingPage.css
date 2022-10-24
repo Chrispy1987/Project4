@@ -74,3 +74,6 @@
     opacity: 0.3;
     animation: warp 20s ease-in infinite;
 }
+#text-aside {
+    text-align: justify;
+}
