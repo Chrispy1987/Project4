@@ -149,6 +149,7 @@ router.post('/invite/decline', async (request, response) => {
         return response.status(501).json({ success: false, toast: 'Server error: cannot decline invite [Groups.removeInvite]' })
     }
 });
+
 // Accepted invites
 router.post('/invite/accept', async (request, response) => {
     const { userId, groupId } = request.body;
@@ -163,6 +164,47 @@ router.post('/invite/accept', async (request, response) => {
         return response.status(501).json({ success: false, toast: 'Server error: cannot update invite table [Groups.removeInvite]' })
     }
     return response.json({ success: true, toast: `Invite accepted` })
+});
+
+// Handle viewing group and transactions
+router.get('/view/:groupId', async (request, response) => {
+    const groupId = request.params.groupId;
+    let dbRes;
+    try {
+        dbRes = await Groups.getGroupData(groupId)
+    } catch (e) {
+        return response.status(501).json({ success: false, toast: 'Server error: issue getting group info [Groups.getGroupInfo]' })
+    }
+    let dbRes2;
+    try {
+        dbRes2 = await Groups.getExpenses(groupId)
+    } catch (e) {
+        return response.status(501).json({ success: false, toast: 'Server error: issue getting expenses [Groups.getExpenses]' })
+    }
+    
+    const transactions = [...dbRes2.rows]
+    try {       
+        await Promise.all(dbRes2.rows.map( async (item, index) => {
+            let dbRes3
+            try {
+                dbRes3 = await Groups.getTransactions(item.expense_id)
+            } catch (e) {
+                console.log('>> Getting Transactions Failed <<')
+                return
+            }
+            transactions[index].transactions = [...dbRes3.rows]    
+        }))
+    } catch (e) {
+        return response.status(501).json({ success: false, toast: 'Server error: issue getting transactions [Groups.getTransactions]' })
+    }
+
+    const groupData = {
+        ...dbRes.rows[0],
+        expenses: transactions
+    }
+    console.log('$$$ GROUP DATA $$$', groupData)
+    
+    return response.json({ success: true, info: groupData })
 });
 
 

@@ -25,15 +25,15 @@ INSERT INTO members(group_id, user_id) VALUES
 (2, 1),
 (3, 1),
 (4, 1),
-(5, 1);
+(5, 2);
 
 TRUNCATE expense restart identity cascade;
 INSERT INTO expense(group_id, user_id, amount, date, icon, description) VALUES
 (1, 1, 16500, '2022-10-01', 'food', 'subway'),
-(1, 1, 5000, '2022-10-01', 'travel', 'train ticket'),
-(1, 1, 25000, '2022-10-01', 'entertainment', 'movies'),
+(1, 1, 5000, '2022-05-01', 'travel', 'train ticket'),
+(1, 1, 25000, '2021-05-12', 'entertainment', 'movies'),
 (2, 1, 12000, '2022-10-01', 'food', 'KFC'),
-(2, 1, 13500, '2022-10-01', 'food', 'Dominos'),
+(2, 1, 13500, '2022-02-01', 'food', 'Dominos'),
 (3, 1, 1000000, '2022-10-01', 'entertainment', 'hack-a-thon');
 
 

@@ -113,8 +113,27 @@ const Groups = {
       WHERE group_id=$1
       AND user_id=$2
       `
-      return db.query(sql, [groupId, userId])
+    return db.query(sql, [groupId, userId])
+  },
+  getExpenses: (groupId) => {
+    const sql = `
+      SELECT expense_id, amount, date, icon, description
+      FROM expense
+      WHERE group_id=$1
+      ORDER BY date DESC
+      `
+    return db.query(sql, [groupId])
+  },
+  getTransactions: (expenseId) => {
+    const sql = `
+      SELECT borrower.user_id, borrower.amount, users.username AS borrower
+      FROM borrower
+      INNER JOIN users ON users.user_id = borrower.user_id
+      WHERE expense_id=$1
+      `
+    return db.query(sql, [expenseId])
   }
+
 }
 
 module.exports = Groups;
