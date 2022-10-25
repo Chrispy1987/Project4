@@ -77,8 +77,8 @@ export const Home = (props) => {
     return (
         <div className='grid'>
             <div className='grid-col1'> {/* LEFT PANEL */}                
+                {inviteState && <h2>PENDING INVITES</h2>}
                 <div className='pending-invites'>
-                    {inviteState && <h2>PENDING INVITES</h2>}
                     {inviteState && inviteState.map(invite => {
                             return (
                                 <Invites
@@ -142,6 +142,7 @@ export const Home = (props) => {
                     {props.panel === 'view' &&
                         <>
                             <ViewGroup
+                                key={groupNumber}
                                 groupId={groupNumber}
                                 session={props.session}
                                 handleToast={props.handleToast}
