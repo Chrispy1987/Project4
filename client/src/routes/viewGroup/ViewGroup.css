@@ -1,0 +1,72 @@
+.expense-line {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+    min-height: 50px;
+    border: solid rgba(0, 0, 0, 0.506) 0.5px;
+    box-sizing: border-box;
+}
+#group-name {
+    font-family: 'Fredoka One', cursive;
+    color: var(--pallette-four);
+    padding: 15px 5px;
+}
+.container-date, .container-description, .container-lent {
+    display: flex;
+    flex-direction: column;
+}
+.container-date {
+    width: 10%;
+    text-align: center;
+}
+.container-icon {
+    width: 10%;
+    text-align: center;
+}
+.container-description {
+    width: 60%;
+    height: 100%;
+    padding-left:10px;
+    text-align: left;
+}
+.container-lent {
+    width: 20%;
+}
+.icon {
+    width: 20px;
+    height: 100%;
+}
+.description {
+    font-weight: 500;
+}
+.amount-paid {
+    font-size: 12px;
+}
+.user-lender, .user-portion {
+    text-align: right;
+    padding-right: 5px;
+    font-weight: 600;
+}
+.user-lender {
+    font-size: 12px;    
+}
+.user-portion {
+    font-size: 14px;
+}
+.green {
+    color: rgb(36, 143, 36);
+}
+.red {
+    color: rgb(173, 46, 46);
+}
+.new-expense-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 10px;
+    font-weight: bold;
+}
