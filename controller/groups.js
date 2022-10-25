@@ -175,6 +175,7 @@ router.get('/view/:groupId', async (request, response) => {
     } catch (e) {
         return response.status(501).json({ success: false, toast: 'Server error: issue getting group info [Groups.getGroupInfo]' })
     }
+    
     let dbRes2;
     try {
         dbRes2 = await Groups.getExpenses(groupId)

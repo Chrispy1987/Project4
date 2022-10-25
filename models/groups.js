@@ -117,8 +117,9 @@ const Groups = {
   },
   getExpenses: (groupId) => {
     const sql = `
-      SELECT expense_id, amount, date, icon, description
+      SELECT users.username AS lender, expense.user_id AS lender_id, expense.expense_id, expense.amount, expense.date, expense.icon, expense.description
       FROM expense
+      INNER JOIN users ON users.user_id = expense.user_id
       WHERE group_id=$1
       ORDER BY date DESC
       `

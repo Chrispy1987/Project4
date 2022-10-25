@@ -29,22 +29,22 @@ INSERT INTO members(group_id, user_id) VALUES
 
 TRUNCATE expense restart identity cascade;
 INSERT INTO expense(group_id, user_id, amount, date, icon, description) VALUES
-(1, 1, 16500, '2022-10-01', 'food', 'subway'),
-(1, 1, 5000, '2022-05-01', 'travel', 'train ticket'),
-(1, 1, 25000, '2021-05-12', 'entertainment', 'movies'),
-(2, 1, 12000, '2022-10-01', 'food', 'KFC'),
-(2, 1, 13500, '2022-02-01', 'food', 'Dominos'),
-(3, 1, 1000000, '2022-10-01', 'entertainment', 'hack-a-thon');
+(1, 2, 1650, '2022-10-01', 'food', 'subway'),
+(1, 1, 500, '2022-05-01', 'travel', 'train ticket'),
+(1, 2, 2500, '2021-05-12', 'entertainment', 'movies'),
+(2, 1, 1200, '2022-10-01', 'food', 'KFC'),
+(2, 1, 1350, '2022-02-01', 'food', 'Dominos'),
+(3, 1, 100000, '2022-10-01', 'entertainment', 'hack-a-thon');
 
 
 TRUNCATE borrower restart identity cascade;
 INSERT INTO borrower(expense_id, user_id, amount) VALUES
-(1, 2, 2200),
-(2, 2, 1000),
-(3, 2, 8000),
-(3, 3, 8000),
-(5, 3, 12500),
-(6, 4, 999999);
+(1, 1, 550),
+(2, 2, 100),
+(3, 1, 800),
+(3, 3, 800),
+(5, 3, 1250),
+(6, 4, 99999);
 
 TRUNCATE invites restart identity cascade;
 INSERT INTO invites(group_id, user_id, inviter) VALUES
