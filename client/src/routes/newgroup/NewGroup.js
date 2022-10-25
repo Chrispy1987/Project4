@@ -16,8 +16,11 @@ export const NewGroup = (props) => {
         const userInput = (event.currentTarget.value).toUpperCase();
         event.currentTarget.value = userInput;
         if (userInput.length < 3) {
-            event.currentTarget.style.color = 'black'
-            event.currentTarget.style.fontWeight = 'normal'
+            event.currentTarget.style.color = 'red'
+            event.currentTarget.style.fontWeight = 'bold'
+            props.handleToast('Your group name is too short')
+            event.currentTarget.select()
+            event.currentTarget.focus()
         } else {
             event.currentTarget.style.color = 'green'
             event.currentTarget.style.fontWeight = 'bold'
@@ -65,7 +68,7 @@ export const NewGroup = (props) => {
             <p>CREATE A GROUP - [user {props.session} - group {groupNumber}]</p>
             <form>
                 <span>My group name is... </span>
-                <input onChange={event => handleGroupName(event)} id='group-name' name='groupName' placeholder='Enter group name...' maxLength='20'/>
+                <input onBlur={event => handleGroupName(event)} id='group-name' name='groupName' placeholder='Enter group name...' maxLength='20'/>
             </form>
             {groupStatus > 0 && 
                 <div id='invite-container'>
