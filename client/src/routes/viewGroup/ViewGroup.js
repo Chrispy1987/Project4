@@ -77,9 +77,9 @@ export const ViewGroup = (props) => {
                                 setPanel('transactions')
                                 }}> 
                                 <div className='container-date'>
-                                    {/* <p>{expense.date}</p> */}
-                                    <p className='date-day'>12</p>
-                                    <p className='date-month'>OCT</p>
+                                    <p></p>
+                                    <p className='date-day'>{helper.getDay(expense.date)}</p>
+                                    <p className='date-month'>{helper.getMonth(expense.date)}</p>
                                 </div>
                                 <div className='container-icon'>
                                     <img className='icon' src='https://cdn-icons-png.flaticon.com/512/8100/8100406.png'/>
@@ -102,8 +102,8 @@ export const ViewGroup = (props) => {
                             groupId = {groupInfo.group_id}
                             session = {props.session}
                             handleToast = {props.handleToast}
-                            triggerGroup= {props.triggerGroup}
-                            setTriggerGroup= {props.setTriggerGroup}
+                            getGroupInfo = {getGroupInfo}
+                            setPanel={setPanel}
                         />
                     </>
                 }
