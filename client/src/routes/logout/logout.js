@@ -18,6 +18,7 @@ export const Logout = (props) => {
         localStorage.clear();
         props.handleToast('Logged out successfully!'); 
         props.setSession(null);
+        props.setPanel('groups');
         navigate("/");
     };
 
