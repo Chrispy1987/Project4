@@ -8,7 +8,6 @@ export const NewGroup = (props) => {
     const [groupNumber, setGroupNumber] = useState(null)
 
     useEffect(() => {
-        console.log('create group rendering')
         groupNumber && console.log('group number created', groupNumber)
     }, [groupNumber])
 
@@ -65,29 +64,36 @@ export const NewGroup = (props) => {
 
     return (
         <div>
-            <form>
-                <span>My group name is... </span>
-                <input onBlur={event => handleGroupName(event)} id='group-name' name='groupName' placeholder='Enter group name...' maxLength='20'/>
-            </form>
-            {groupStatus > 0 && 
-                <div id='invite-container'>
-                    <p>Add up to 3 friends (enter username or email)</p>
-                    <div id='invite-forms'>
-                        <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
-                            <input onChange={event => ''} className='group-invite' name='invite' required/>
-                            <button>Invite</button>
-                        </form>
-                        <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
-                            <input onChange={event => ''} className='group-invite' name='invite' required/>
-                            <button>Invite</button>
-                        </form>
-                        <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
-                            <input onChange={event => ''} className='group-invite' name='invite' required/>
-                            <button>Invite</button>  
-                        </form>
+            <div className='header-flex'>
+                <h2 id='group-header' className='grid-header'>CREATE NEW GROUP</h2>
+                <button className='action-button back' onClick={()=> props.setPanel('groups')}>Go Back</button>
+            </div>
+            <div className='form-container'>
+                <form>
+                    <span>My group name is... </span>
+                    <input onBlur={event => handleGroupName(event)} id='group-name' name='groupName' placeholder='Enter group name...' maxLength='20'/>
+                </form>
+                {groupStatus > 0 && 
+                    <div id='invite-container'>
+                        <p>Add up to 3 friends (enter username or email)</p>
+                        <div id='invite-forms'>
+                            <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
+                                <input onChange={event => ''} className='group-invite' name='invite' required/>
+                                <button>Invite</button>
+                            </form>
+                            <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
+                                <input onChange={event => ''} className='group-invite' name='invite' required/>
+                                <button>Invite</button>
+                            </form>
+                            <form className='invite-form' onSubmit={event => handleGroupInvite(event)}>
+                                <input onChange={event => ''} className='group-invite' name='invite' required/>
+                                <button>Invite</button>  
+                            </form>
+                        </div>
+                        <button className='action-button' onClick={()=>props.setPanel('groups')}>FINALISE</button>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     )
 }

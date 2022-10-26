@@ -16,12 +16,10 @@ export const Home = (props) => {
     const [groupNumber, setGroupNumber] = useState(null)
 
     const userId = props.session;
-    console.log('home rendering')
-    console.log('PANEL', props.panel )
+    console.log('PANEL:', props.panel )
 
     // Get groups that the user belongs to
     useEffect(() => {
-        console.log('groups rendering')
         axios.get(`/groups/member/${userId}`)
             .then((dbRes) => {                
                 const groups = dbRes.data.groups;
@@ -81,7 +79,6 @@ export const Home = (props) => {
                 {/* {inviteState && <h2>PENDING INVITES</h2>} */}
                 <div className='pending-invites'>
                     {inviteState && inviteState.map(invite => {
-                        console.log(invite)
                             return (
                                 <Invites
                                     key={invite.invite_id}
@@ -106,8 +103,10 @@ export const Home = (props) => {
                 <div className='grid-row2'>
                     {props.panel === 'groups' && 
                         <>
-                            <h2 id='group-header' className='grid-header'>YOUR GROUPS</h2>
-                            {groupState && <button className='float-button-right' onClick={()=> props.setPanel('create')}> + New Group</button>}
+                            <div className='header-flex'>
+                                <h2 id='group-header' className='grid-header'>YOUR GROUPS</h2>
+                                <button className='action-button' onClick={()=> props.setPanel('create')}> + New Group</button>
+                            </div>                           
                             {groupState ? groupState.map((group) => {
                                 return (
                                     <Groups
@@ -133,24 +132,25 @@ export const Home = (props) => {
                     }
                     {props.panel === 'create' &&
                         <>
-                            <h2 id='new-group-header' className='grid-header'>CREATE NEW GROUP</h2>
                             <NewGroup 
                             session={props.session}
                             handleToast={props.handleToast}
                             triggerGroup={triggerGroup}
                             setTriggerGroup={setTriggerGroup}
+                            setPanel={props.setPanel}
                             />
                         </>                    
                     }
                     {props.panel === 'view' &&
                         <>
                             <ViewGroup
-                                key={groupNumber}
+                                key={`view-${groupNumber}`}
                                 groupId={groupNumber}
                                 session={props.session}
                                 handleToast={props.handleToast}
                                 triggerGroup={triggerGroup}
                                 setTriggerGroup={setTriggerGroup}
+                                setPanel={props.setPanel}
                             />
                         </>
                     }
