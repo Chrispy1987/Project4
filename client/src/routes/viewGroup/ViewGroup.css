@@ -11,9 +11,7 @@
     box-sizing: border-box;
 }
 #group-name {
-    font-family: 'Fredoka One', cursive;
     color: var(--pallette-four);
-    padding: 15px 5px;
 }
 .container-date, .container-description, .container-lent {
     display: flex;
@@ -63,10 +61,4 @@
 .red {
     color: rgb(173, 46, 46);
 }
-.new-expense-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    padding: 10px;
-    font-weight: bold;
-}
+

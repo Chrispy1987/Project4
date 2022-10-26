@@ -65,7 +65,6 @@ export const NewGroup = (props) => {
 
     return (
         <div>
-            <p>CREATE A GROUP - [user {props.session} - group {groupNumber}]</p>
             <form>
                 <span>My group name is... </span>
                 <input onBlur={event => handleGroupName(event)} id='group-name' name='groupName' placeholder='Enter group name...' maxLength='20'/>

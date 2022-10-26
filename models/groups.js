@@ -99,9 +99,11 @@ const Groups = {
   },
   getInvites: (userId) => {
     const sql = `
-      SELECT * 
+      SELECT invites.group_id, users.username AS inviter, groups.name
       FROM invites
-      WHERE user_id = $1
+      INNER JOIN users ON users.user_id = invites.inviter
+      INNER JOIN groups ON groups.group_id = invites.group_id
+      WHERE invites.user_id = $1
       `
     return db.query(sql, [userId])
     .then(dbRes => dbRes)

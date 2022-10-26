@@ -68,7 +68,7 @@
     }
 }
 #overlay {
-    z-index: 99;
+    z-index: 98;
     position: absolute;
     top: 0px;
     opacity: 0.3;

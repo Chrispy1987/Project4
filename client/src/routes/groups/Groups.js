@@ -27,9 +27,8 @@ export const Groups = (props) => {
             <div className='group-container'>
                 <div id='group-details'>
                     <h2>{props.name}</h2>
-                    <p>Created by: {props.owner}</p>
-                    <p>Group Id: {props.groupId}</p>
-                    <p>MEMBERS:
+                    <p><b>Created by:</b> {props.owner}</p>
+                    <p><b>Group Members:</b>
                     {memberState && 
                     memberState.map((member, index) => {
                             return <span key={index}> {helper.capitaliseFirstLetter(member.username)}{index < memberState.length -1 && ', '}</span>})

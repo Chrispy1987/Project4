@@ -1,5 +1,6 @@
 import './Invites.css'
 import axios from 'axios'
+import { helper } from '../../js/components/helper'
 
 // Generate pending invites
 export const Invites = (props) => {
@@ -33,12 +34,22 @@ export const Invites = (props) => {
 
     return (
         <div className='invites'>
-           <p>GROUP: {props.groupId}</p>
-           <p>INVITED BY: {props.inviter}</p>
+            <div className='invite-header'>
+                <div className='invite-header-item'>
+                    <p><b>Pending invite to:</b></p> 
+                    <p className='invite-name'>{props.groupName}</p>
+                </div>
+                <div className='invite-header-item'>
+                    <p><b>Invited by:</b></p> 
+                    <p className='invite-inviter'>{helper.capitaliseFirstLetter(props.inviter)}</p>
+                </div>
+            </div>           
            <form className='invite-decision' onSubmit={e => e.preventDefault()}>
                 <input type='hidden' name='groupId' value={props.groupId}></input>
-                <button onClick={ () => handleInviteDecision('accept')}>Accept</button>
-                <button onClick={ () => handleInviteDecision('decline')}>Decline</button>
+                <div className='invite-buttons'>
+                    <button className='invite-button' onClick={ () => handleInviteDecision('accept')}>Accept</button>
+                    <button className='invite-button' onClick={ () => handleInviteDecision('decline')}>Decline</button>
+                </div>
            </form>
         </div>
     )

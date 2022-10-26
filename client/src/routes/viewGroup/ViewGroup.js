@@ -44,13 +44,13 @@ export const ViewGroup = (props) => {
                     <li>GROUP NAME: {groupInfo.name}</li>
                     <li>STATUS: {groupInfo.settled ? 'This group has been settled' : 'Not settled'}</li>
                 </ul> */}
-                <h2 id='group-name'>{groupInfo.name}</h2>
+                <h2 id='group-name' className='grid-header'>{groupInfo.name}</h2>
                 {groupInfo.expenses.length === 0 && 
                     <>
                         <p><i>"The secret of getting ahead is getting started" ~ Mark Twain</i></p>
                     </>
                 }
-                <button className='new-expense-button' onClick={()=>{}}> + New Expense</button>
+                <button className='float-button-right' onClick={()=>{}}> + New Expense</button>
                 {groupInfo && groupInfo.expenses.map((expense) => {
                     const lender = helper.capitaliseFirstLetter(expense.lender)
                     const amountPaid = helper.convertCentsToDollars(expense.amount);

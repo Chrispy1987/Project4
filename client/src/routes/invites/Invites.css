@@ -1,6 +1,40 @@
 .invites {
     margin: 10px;
-    padding: 10px 2px;
-    border: solid black 1px;
+    padding: 10px;
+    height: auto;
+    border: dashed rgb(5, 80, 14) 1px;
+    border-radius: 10px;
     text-align: center;
+    background-color: rgb(255, 221, 159);
+}
+.invite-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 40px;
+}
+.invite-button {
+    padding: 5px 8px;
+    background-color: var(--pallette-four);
+    border-radius: 6px;
+    cursor: pointer;
+}
+.invite-button:hover {
+    background-color: var(--pallette-four-hover);
+}
+.invite-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80px;
+}
+.invite-header-item {
+    margin: 5px 0;
+}
+.invite-name {
+    font-size: 14px;
+    margin: 5px 0;
+}
+.invite-inviter {
+    margin: 5px 0;
 }

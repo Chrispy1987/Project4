@@ -1,9 +1,12 @@
 .group-container {
     display: flex;
+    justify-content: space-between;
     padding: 10px;
     height: 100px;
     margin-bottom: 20px;
-    background-color: yellow;
+    border: solid black 1px;
+    border-radius: 10px;
+    background-color: rgb(220, 250, 253);
 }
 #group-details {
     width: 80%;

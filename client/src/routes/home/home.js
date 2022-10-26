@@ -17,6 +17,7 @@ export const Home = (props) => {
 
     const userId = props.session;
     console.log('home rendering')
+    console.log('PANEL', props.panel )
 
     // Get groups that the user belongs to
     useEffect(() => {
@@ -77,13 +78,15 @@ export const Home = (props) => {
     return (
         <div className='grid'>
             <div className='grid-col1'> {/* LEFT PANEL */}                
-                {inviteState && <h2>PENDING INVITES</h2>}
+                {/* {inviteState && <h2>PENDING INVITES</h2>} */}
                 <div className='pending-invites'>
                     {inviteState && inviteState.map(invite => {
+                        console.log(invite)
                             return (
                                 <Invites
                                     key={invite.invite_id}
                                     groupId={invite.group_id}
+                                    groupName={invite.name}
                                     inviter={invite.inviter}
                                     session={props.session}
                                     handleToast={() => props.handleToast()}
@@ -103,8 +106,8 @@ export const Home = (props) => {
                 <div className='grid-row2'>
                     {props.panel === 'groups' && 
                         <>
-                            <h2>YOUR GROUPS</h2>
-                            {groupState && <button onClick={()=> props.setPanel('create')}> + New Group</button>}
+                            <h2 id='group-header' className='grid-header'>YOUR GROUPS</h2>
+                            {groupState && <button className='float-button-right' onClick={()=> props.setPanel('create')}> + New Group</button>}
                             {groupState ? groupState.map((group) => {
                                 return (
                                     <Groups
@@ -130,7 +133,7 @@ export const Home = (props) => {
                     }
                     {props.panel === 'create' &&
                         <>
-                            <h2>CREATE NEW GROUP</h2>
+                            <h2 id='new-group-header' className='grid-header'>CREATE NEW GROUP</h2>
                             <NewGroup 
                             session={props.session}
                             handleToast={props.handleToast}

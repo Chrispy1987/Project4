@@ -54,13 +54,13 @@ function App() {
               </div>
               :
               <div>
-                <Logout handleToast={handleToast} setSession={setSession}/>
+                <Logout handleToast={handleToast} setSession={setSession} setPanel={setPanel} />
                 {/* <button>BURGER DROPDOWN</button>  */}
               </div>    
             }           
         </nav>
         <div className='spacer'>
-          <ToastAlert toast={toast} handleToast={handleToast} />
+          <ToastAlert toast={toast} handleToast={handleToast}/>
         </div>
         <section>
           {!session ?
