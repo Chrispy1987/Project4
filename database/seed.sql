@@ -43,6 +43,7 @@ INSERT INTO borrower(expense_id, user_id, amount) VALUES
 (2, 2, 100),
 (3, 1, 800),
 (3, 3, 800),
+(4, 3, 600),
 (5, 3, 1250),
 (6, 4, 99999);
 
@@ -52,7 +53,7 @@ INSERT INTO invites(group_id, user_id, inviter) VALUES
 (2, 2, 1),
 (3, 2, 1),
 (4, 2, 1),
-(5, 1, 1),
+(5, 1, 2),
 (1, 3, 1),
 (2, 3, 1),
 (3, 3, 1),

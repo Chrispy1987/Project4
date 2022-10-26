@@ -57,5 +57,5 @@ CREATE TABLE IF NOT EXISTS invites (
     invite_id SERIAL PRIMARY KEY,
     group_id INT REFERENCES groups(group_id) ON DELETE CASCADE,
     user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
-    inviter TEXT
+    inviter INT
 );
