@@ -135,8 +135,22 @@ const Groups = {
       WHERE expense_id=$1
       `
     return db.query(sql, [expenseId])
+  },
+  createExpense: (creator, groupId, total, date, icon, description) => {
+    const sql = `
+    INSERT INTO expense(group_id, user_id, amount, date, icon, description)
+    VALUES($1, $2, $3, $4, $5, $6)
+    RETURNING expense_id
+    `
+  return db.query(sql, [groupId, creator, total, date, icon, description])
+  },
+  allocateBorrowers: (expenseId, user, amount) => {
+    const sql = `
+    INSERT INTO borrower(expense_id, user_id, amount)
+    VALUES($1, $2, $3)
+    `
+  return db.query(sql, [expenseId, user, amount])
   }
-
 }
 
 module.exports = Groups;

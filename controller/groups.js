@@ -208,5 +208,37 @@ router.get('/view/:groupId', async (request, response) => {
     return response.json({ success: true, info: groupData })
 });
 
+// Handle adding new expense to group
+router.post('/expense', async (request, response) => {
+    const { creator, groupId, icon, description, total, users, allocations, date } = request.body;
+
+    let dbRes;
+    try {
+        dbRes = await Groups.createExpense(creator, groupId, Number(total*100), date, icon, description)
+    } catch (e) {
+        console.log(e)
+        return response.status(501).json({ success: false, toast: 'Server error: cannot create expense [Groups.createExpense]' })
+    }
+
+    const expenseId = dbRes.rows[0].expense_id;
+    try {       
+        await Promise.all(users.map( async (user, index) => {
+            console.log('creator', creator)
+            console.log('user', user)
+            try {
+                if (Number(user) === creator) return
+                await Groups.allocateBorrowers(expenseId, user, Number(allocations[index]*100))
+            } catch (e) {
+                console.log('ERROR - ALLOCATE BORROWERS', e)
+                return
+            }
+        }))
+    } catch (e) {
+        return response.status(501).json({ success: false, toast: 'Server error: issue allocating borrowers [Groups.allocateBorrowers]' })
+    }
+    
+    return response.json({ success: true, toast: 'Expense successfully created!' })
+});
+
 
 module.exports = router;

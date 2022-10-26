@@ -1,0 +1,63 @@
+.expense-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px 0;
+    height: 500px;
+    transition: 1s ease all;  
+}
+.icon {
+    height: 40px;
+    width: 40px;
+    padding: 10px;
+    transition: 0.5s ease all;
+}
+.icon-option {
+    visibility: hidden;
+}
+.icon-option:checked + img {
+    outline: 2px solid green;
+    background-color: rgb(231, 248, 171);
+    transform: 1s ease all;
+}
+.expense-allocation {
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+    max-width: 250px;   
+}
+.expense-inputs {
+    padding: 5px 3px;
+    border: none;
+    outline: none;
+    width: auto;
+    min-width: 50px;
+    background-color: yellow;
+}
+.expense-save {
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: 2s ease all;
+    margin-top: 20px;
+}
+.match {
+    background-color: greenyellow;
+    padding: 5px 30px;
+    font-weight: bold;
+    color: green;
+}
+.remainder {
+    position: relative;
+}
+.allocation-match {
+    position: absolute;
+    top: 0px;
+    right: -40px;
+    height: 25px;
+    margin-left: 10px;
+}
+.remainder-text {
+    text-align: center;
+}
+
