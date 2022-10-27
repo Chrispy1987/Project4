@@ -15,7 +15,8 @@ export const NewExpense = (props) => {
 
     const [members, setMembers] = useState(null)
     const [total, setTotal] = useState(null)
-    const [allocated, setAllocated] = useState(Number(0))
+    const [allocated, setAllocated] = useState(null)
+    const [step, setStep] = useState(0)
 
     // get group members
     useEffect(()=> {
@@ -53,6 +54,11 @@ export const NewExpense = (props) => {
             date: new Date()
         }
 
+        if (!data.icon || !data.description || !data.total || !data.users || !data.allocations) {
+            props.handleToast('Please complete all fields')
+            return
+        } 
+
         console.log(data)
 
         if (data.icon === null) {
@@ -87,50 +93,69 @@ export const NewExpense = (props) => {
     return (
         <>
         <form>
-            <div className='expense-form-container'>
-                <p><b>Select expense type</b></p>
+            <div className='expense-form-container fade-in'>
+                <p className='expense-label'><b>Select expense type</b></p>
                 <div className='icon-options'>                    
-                    <label>
+                    <label onMouseOver={e=>e.currentTarget.children[2].classList.replace('hide', 'reveal')} onMouseLeave={e=>e.currentTarget.children[2].classList.replace('reveal', 'hide')} onClick={()=>{!step && setStep(1)}}>
                         <input className='icon-option' type='radio' name='icon' value='food'/>
-                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/8100/8100406.png' alt='food icon'/>
+                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/737/737967.png' alt='food icon'/>
+                        <div className='hide'>Food & Drink</div>
                     </label>
-                    <label>
+                    <label onMouseOver={e=>e.currentTarget.children[2].classList.replace('hide', 'reveal')} onMouseLeave={e=>e.currentTarget.children[2].classList.replace('reveal', 'hide')} onClick={()=>{!step && setStep(1)}}>
                         <input className='icon-option' type='radio' name='icon' value='entertainment'/>
-                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/8100/8100406.png' alt='entertainment icon'/>
+                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/864/864763.png' alt='entertainment icon'/>
+                        <div className='hide'>Entertainment</div>
                     </label>
-                    <label>
+                    <label onMouseOver={e=>e.currentTarget.children[2].classList.replace('hide', 'reveal')} onMouseLeave={e=>e.currentTarget.children[2].classList.replace('reveal', 'hide')} onClick={()=>{!step && setStep(1)}}>
                         <input className='icon-option' type='radio' name='icon' value='transport'/>
-                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/8100/8100406.png' alt='transport icon'/>
+                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/995/995260.png' alt='transport icon'/>
+                        <div className='hide'>Transport</div>
                     </label>
-                    <label>
-                        <input className='icon-option' type='radio' name='icon' value='food'/>
-                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/8100/8100406.png' alt='other icon'/>
+                    <label onMouseOver={e=>e.currentTarget.children[2].classList.replace('hide', 'reveal')} onMouseLeave={e=>e.currentTarget.children[2].classList.replace('reveal', 'hide')} onClick={()=>{!step && setStep(1)}}>
+                        <input className='icon-option' type='radio' name='icon' value='other'/>
+                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/2521/2521963.png' alt='other icon'/>
+                        <div className='hide'>Other</div>
                     </label>
                 </div>
-                <label htmlFor='description'><b>Describe the expense</b></label>
-                <input className='expense-inputs' type='text' name='description' placeholder='Enter a description' required/>
-                <label htmlFor='total'><b>What was the total amount?</b></label>
-                <span>$<input onBlur={e=>handleNumber(e, 'total')} className='expense-inputs' type='number' name='total' placeholder='0.00' required/></span>
-                <label htmlFor='amount'><b>How much does each person owe?</b></label>
-                {members && members.map(member => {
-                    return (                        
-                        <div className='expense-allocation'>
-                            <p>{helper.capitaliseFirstLetter(member.username)}</p>
+                <>
+                {step >= 1 &&
+                <div className='flex-col fade-in'>
+                    <label htmlFor='description' className='expense-label'><b>Describe the expense</b></label>
+                    <input onChange={()=>step < 2 && setStep(2)} className='expense-inputs expense-description' type='text' name='description' placeholder='Enter a description' required/>
+                </div>
+                }
+                </>
+                <>
+                {step >=2 &&
+                <div className='flex-col fade-in'>
+                    <label htmlFor='total' className='expense-label'><b>What was the total amount?</b></label>
+                    <span>$<input onChange={()=>step < 3 && setStep(3)} onBlur={e=>handleNumber(e, 'total')} className='expense-inputs' type='number' name='total' placeholder='0.00' required/></span>
+                </div>
+                }
+                </>
+
+                {step >=3 && <label htmlFor='amount' className='expense-label fade-in'><b>How much does each person owe?</b></label>}
+                {step >= 3 && members && members.map(member => {                    
+                    return (
+                        <>                                                
+                        <div className='expense-allocation fade-in'>
+                            <p className='expense-user'>{helper.capitaliseFirstLetter(member.username)}</p>
                             <input type='hidden' name='userId' value={member.user_id}/>
-                            <span>$<input onBlur={e=>handleNumber(e, 'allocate')}className='expense-inputs allocations' type='number' name='amount' placeholder='$0.00'/></span>
-                        </div>       
+                            <span>$<input onChange={()=>{step < 4 && setStep(4)}} onBlur={e=>handleNumber(e, 'allocate')}className='expense-inputs allocations' type='number' name='amount' placeholder='0.00'/></span>
+                        </div>
+                        </>   
                     )
                 })}
-                {total && 
-                    <div>
-                        <div className='remainder'>
+                {step >= 4 && 
+                    <>
+                        <div className='remainder fade-in'>
                             <p className='remainder-text'><span>${allocated}</span> of ${total} allocated</p>
-                            {total === allocated && <img className='allocation-match' src='https://cdn-icons-png.flaticon.com/512/2550/2550322.png'/>}
+                            {total === allocated && <img className='allocation-match fade-in' src='https://cdn-icons-png.flaticon.com/512/2550/2550322.png'/>}
                         </div>
-                        <p className={Number(total) >= Number(allocated) ? 'remainder-text green': 'remainder-text red'}>${(total - allocated).toFixed(2)} {Number(total) >= Number(allocated) ? 'remaining' : 'over'}</p>
-                    </div>
-                }
-                <button onClick={(e)=>{handleNewExpense(e)}}className={total === allocated ? 'expense-save match': 'expense-save'}>SAVE</button>
+                        <b><p className={Number(total) >= Number(allocated) ? 'remainder-text green fade-in': 'remainder-text red fade-in'}>${(total - allocated).toFixed(2)} {Number(total) >= Number(allocated) ? 'remaining' : 'over'}</p></b>
+                        <button onClick={(e)=>{handleNewExpense(e)}}className={total === allocated ? 'expense-save match fade-in': 'expense-save fade-in'}>SAVE</button>
+                    </>                    
+                }                
              </div>
         </form>       
         </>

@@ -33,10 +33,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 90px;
+    height: auto;
 }
 .grid-header {
     font-family: 'Fredoka One', cursive;
+    text-align: center;
     padding: 15px 5px;
     font-size: 30px;
 }
@@ -44,19 +45,28 @@
     color: var(--pallette-three);
 }
 .action-button {
-    height: 50px;
-    padding: 10px;
+    margin-top: 5px;
+    padding: 10px 15px;
     font-weight: bold;
-    border: solid black 1px;
-    border-radius: 5px;
-    background-color: rgb(207, 250, 207);
+    border: outset rgb(142, 143, 143) 3px;
+    border-radius: 10px;
+    color: var(--pallette-one);
+    background-color: var(--button-one);
     cursor: copy;
 }
+.action-button:hover {
+    background-color: var(--button-one-hover);
+}
 .action-button.back {
-    background-color: rgb(203, 238, 252);
-    margin-left: 10px;
+    background-color: var(--button-two);
+    margin-left: 6px;
     cursor: pointer;
 }
+.action-button.back:hover {
+    background-color: var(--button-two-hover);
+}
+
+/* MEDIA QUERIES FOR RESPONSIVE DESIGN */
 @media only screen and (max-width: 1110px) {
     .grid {
         display: flex;
@@ -76,5 +86,20 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+    }    
+}
+@media only screen and (max-width: 500px) {
+    .header-flex {
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+    .grid-header {
+        font-size: 40px;
+    }
+    .action-button {
+        align-items: center;
+        font-size: 16px;
+        padding: 16px;
+        width: 160px;
     }
 }

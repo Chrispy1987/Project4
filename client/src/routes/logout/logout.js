@@ -1,6 +1,6 @@
 import './logout.css'
 import axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 // Log user out and remove session data
 export const Logout = (props) => {
@@ -25,7 +25,7 @@ export const Logout = (props) => {
 
     return (
         <div>
-            <Link to='/'><button onClick={handleLogout} className='button-v3'>LOGOUT</button></Link>
+            <button onClick={handleLogout} className='button-v3'>LOGOUT</button>
         </div>
     )
 }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export const LandingPage = () => {
     return (
-        <div id="content">
+        <div className="content fade-in">
             <div id="content-left">
                 <p id="text-heading">"I owe you. Yewomi."</p>
                 <p id="text-hero">Making sharing expenses, easy!</p>

@@ -32,7 +32,7 @@ export const ViewTransaction = (props) => {
     }
 
     return (
-        <div>
+        <div className='fade-in'>
             <p>VIEWING TRANSACTION DEETS</p>
             <p>Ability to edit? Add visual icon somewhere?</p>
             <p>{helper.capitaliseFirstLetter(props.expense.description)}</p>

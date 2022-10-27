@@ -1,21 +1,65 @@
 .group-container {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
-    height: 100px;
+    padding: 30px;
+    height: auto;
+    min-height: 100px;
+    max-height: 300px;
     margin-bottom: 20px;
     border: solid black 1px;
     border-radius: 10px;
-    background-color: rgb(220, 250, 253);
+    background-color: rgb(223, 244, 246);
 }
-#group-details {
+.group-details {
     width: 80%;
 }
-#group-buttons {
+.group-buttons {
     width: 20%;
+    margin: 4px 0;
 }
-#group-details, #group-buttons {
+.group-details, .group-buttons {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+.group-buttons > button {
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+    background-color: var(--pallette-three);
+    transition: 1s ease all;
+}
+.group-buttons > button:hover {
+    background-color: var(--pallette-three-hover)
+}
+.group-buttons > .button-confirm {
+    outline: solid yellow 5px;
+    background-color: red;
+}
+.group-buttons > .button-confirm:hover {
+    background-color: red;
+}
+
+@media only screen and (max-width: 500px) {
+    .group-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        height: 220px;
+    }
+    .group-details {
+        height: 150px;
+        justify-content: space-evenly;
+    }
+    .group-buttons {
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100%;
+    }
+    .group-buttons > button {
+        width: 100px;
+        padding: 10px 15px;
+        font-size: 16px;
+    }
 }

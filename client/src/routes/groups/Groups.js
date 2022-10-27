@@ -24,21 +24,21 @@ export const Groups = (props) => {
 
     return (
         <div>
-            <div className='group-container'>
-                <div id='group-details'>
+            <div className='group-container fade-in'>
+                <div className='group-details'>
                     <h2>{props.name}</h2>
                     <p><b>Created by:</b> {props.owner}</p>
-                    <p><b>Group Members:</b>
+                    <p><b>Members:</b>
                     {memberState && 
                     memberState.map((member, index) => {
-                            return <span key={index}> {helper.capitaliseFirstLetter(member.username)}{index < memberState.length -1 && ', '}</span>})
+                            return <span key={index}> {helper.capitaliseFirstLetter(member.username)}{index === memberState.length -2 ? ' & ' : index < memberState.length -1 && ', '}</span>})
                     }
                     </p>
                 </div>
-                <div id='group-buttons'>
-                    <button onClick={()=> props.handleViewGroup(props.groupId)}>View Group</button>
+                <div className='group-buttons'>
+                    <button onClick={()=> props.handleViewGroup(props.groupId)}>View</button>
                     { props.session == props.ownerId && 
-                        <button onClick={event => props.handleGroupDeletion(event, props.groupId)}>Delete Group</button>}
+                        <button onClick={event => props.handleGroupDeletion(event, props.groupId)}>Delete</button>}
                 </div>
             </div>
         </div>

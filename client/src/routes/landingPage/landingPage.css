@@ -1,7 +1,7 @@
-#content {
+.content {
     display: flex;
     justify-content: space-around;
-    margin: 0 auto;
+    margin: 15px auto;
     max-width: 1500px;
     height: 800px
 }   
@@ -37,7 +37,10 @@
     font-size: 22px;
     padding: 15px;
     margin: 0 0 0px 60px;
-    background-color: var(--pallette-three)
+    color: white;
+    font-weight: bold;
+    background-color: var(--pallette-three);
+    cursor: pointer;
 }
 #content-left #sign-up:hover {
     background-color: var(--pallette-three-hover)

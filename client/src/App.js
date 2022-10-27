@@ -8,7 +8,6 @@ import { SignUp } from './routes/signUp/signUp'
 import { Home } from './routes/home/home'
 import { ToastAlert } from './routes/common/toastAlert'
 import { Logout } from './routes/logout/logout'
-import { NewGroup } from './routes/newgroup/NewGroup'
 
 function App() {
   const [session, setSession] = useState(Number(localStorage.getItem('user_id')))
@@ -27,36 +26,41 @@ function App() {
         clearTimeout(toastTimerId)
     }}, [toast])
 
-    // Tracking state of logged in user
-    useEffect(() => {
-      let userId = Number(localStorage.getItem('user_id'));
-      if (userId === session) {
-        return
-      } else {
-        localStorage.setItem('user_id', session) //store in local in case of page refresh
-      }      
-    }, [session])
+  // Tracking state of logged in user
+  useEffect(() => {
+    let userId = Number(localStorage.getItem('user_id'));
+    if (userId === session) {
+      return
+    } else {
+      localStorage.setItem('user_id', session) //store in local in case of page refresh
+    }      
+  }, [session])
 
   const handleToast = toast => {
     toast === 'close' ? setToast(null) : setToast(toast);
   }
   
   return (
-    <div className="App">
+    <div className="App fade-in">
       <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"></link>
       <BrowserRouter>
-        <nav className={session && 'nav-bar-logged-in'}>
-            <button onClick={()=>setPanel('groups')} className={session ? 'logo logo-logged-in' : 'logo'}>Yewomi</button>
+        <nav className={session && 'nav-bar-logged-in'}>            
             {!session ?
+            <>
+              <Link to='/'><button onClick={()=>setPanel('groups')} className={session ? 'logo logo-logged-in' : 'logo'}>Yewomi</button></Link>
               <div id="nav-buttons">
                   <Link to='/login'><button className='button-v1'>Log in</button></Link>
                   <Link to='/signup'><button className='button-v2'>Sign up</button></Link>
               </div>
-              :
+            </>
+            :
+            <>
+              <button onClick={()=>setPanel('groups')} className={session ? 'logo logo-logged-in' : 'logo'}>Yewomi</button>
               <div>
                 <Logout handleToast={handleToast} setSession={setSession} setPanel={setPanel} />
                 {/* <button>BURGER DROPDOWN</button>  */}
-              </div>    
+              </div> 
+            </>   
             }           
         </nav>
         <div className='spacer'>
@@ -68,7 +72,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element= {<Login handleToast={handleToast} setSession={setSession} />}/>
-                <Route path="/signup" element={<SignUp />} />                
+                <Route path="/signup" element={<SignUp handleToast={handleToast}/>} />                
             </Routes>
             :
             // LOGGED IN

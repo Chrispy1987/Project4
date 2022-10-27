@@ -31,7 +31,7 @@ export const Login = (props) => {
     }
 
     return (
-        <div className='login-container'>
+        <div className='login-container fade-in'>
             <h2 className="subheading">~ Log in ~</h2>
             <form id='login-form' onSubmit={event => handleLogin(event)}>                
                 <div className='login-frame'>

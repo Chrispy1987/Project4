@@ -49,13 +49,13 @@ export const Home = (props) => {
 
     // Delete target group and refresh UI
     const handleGroupDeletion = async (event, groupId) => {
-        if (event.target.textContent === 'Delete Group') {
+        if (event.target.textContent === 'Delete') {
             event.target.textContent = 'Confirm Delete';
-            event.target.style.color = 'red';
+            event.target.className = 'button-confirm'
             setTimeout(() => {
-                event.target.textContent = 'Delete Group';
-                event.target.style.color = 'black';
-            }, 3000);            
+                event.target.textContent = 'Delete';
+                event.target.className = ''
+            }, 4000);            
         } else {
             try {
                 const dbRes = await axios.delete(`groups/${groupId}`)
@@ -76,7 +76,6 @@ export const Home = (props) => {
     return (
         <div className='grid'>
             <div className='grid-col1'> {/* LEFT PANEL */}                
-                {/* {inviteState && <h2>PENDING INVITES</h2>} */}
                 <div className='pending-invites'>
                     {inviteState && inviteState.map(invite => {
                             return (
@@ -106,7 +105,7 @@ export const Home = (props) => {
                             <div className='header-flex'>
                                 <h2 id='group-header' className='grid-header'>YOUR GROUPS</h2>
                                 <button className='action-button' onClick={()=> props.setPanel('create')}> + New Group</button>
-                            </div>                           
+                            </div>
                             {groupState ? groupState.map((group) => {
                                 return (
                                     <Groups

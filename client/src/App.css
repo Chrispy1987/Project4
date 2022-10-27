@@ -8,10 +8,14 @@
   --pallette-one-hover: #5664af;
   --pallette-two: rgb(51, 114, 110);
   --pallette-two-hover: rgb(119, 198, 193);
-  --pallette-three: #663982; 
-  --pallette-three-hover: #9862b9; 
+  --pallette-three: #9363b1; 
+  --pallette-three-hover: #ce9def; 
   --pallette-four: orange;
   --pallette-four-hover: rgb(229, 199, 144);
+  --button-one: rgba(108, 239, 165, 0.813);
+  --button-one-hover: rgba(147, 248, 191, 0.813);
+  --button-two: rgba(128, 211, 253, 0.827);
+  --button-two-hover: rgba(170, 221, 246, 0.827);
   --error: #dc143c; 
   --success: #3df505; 
 }
@@ -25,6 +29,10 @@
   }
 }
 .App {
+  opacity: 0;
+  animation: fade-in 2s linear 0.5s 1 normal forwards;
+}
+.fade-in {
   opacity: 0;
   animation: fade-in 2s linear 0.5s 1 normal forwards;
 }
@@ -78,6 +86,7 @@ nav {
 }
 .button-v3 {
   color: var(--pallette-two);
+  margin-right: 20px;
   background-color: white;  
 }
 .button-v2:hover {
