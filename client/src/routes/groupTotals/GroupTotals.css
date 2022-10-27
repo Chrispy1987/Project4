@@ -1,0 +1,10 @@
+.group-totals-container {
+    height: auto;
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: solid black 1px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: rgb(218, 240, 249);
+}
