@@ -123,7 +123,7 @@ const Groups = {
       FROM expense
       INNER JOIN users ON users.user_id = expense.user_id
       WHERE group_id=$1
-      ORDER BY date DESC
+      ORDER BY date DESC, expense_id DESC
       `
     return db.query(sql, [groupId])
   },
