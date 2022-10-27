@@ -4,6 +4,8 @@ import axios from 'axios'
 import { helper } from '../../js/components/helper'
 import { NewExpense } from '../newExpense/NewExpense'
 import { ViewTransaction } from '../viewTransaction/ViewTransaction'
+import { GroupTotals } from '../groupTotals/GroupTotals'
+
 
 {/* PROPS PASSED INTO COMPONENT:
     <ViewGroup
@@ -38,22 +40,48 @@ export const ViewGroup = (props) => {
         setGroupInfo(data)
     }
 
+    const assignIcon = (icon) => {
+        console.log(icon)
+
+        const icons = {
+            'food': 'https://cdn-icons-png.flaticon.com/512/737/737967.png',
+            'entertainment': 'https://cdn-icons-png.flaticon.com/512/864/864763.png',
+            'transport': 'https://cdn-icons-png.flaticon.com/512/995/995260.png',
+            'other': 'https://cdn-icons-png.flaticon.com/512/2521/2521963.png'
+        }
+
+        return icons[icon]
+    }
+
     return (
         <>  
             {groupInfo &&
             <>
                 <div className='header-flex'>
                     <h2 id='group-name' className='grid-header'>{groupInfo.name}</h2>
-                    {groupInfo.expenses.length === 0 && 
-                        <p><i>"The secret of getting ahead is getting started" ~ Mark Twain</i></p>}
                     {panel === 'expenses' && 
-                    <div>
+                    <div className='center'>
                         <button className='action-button' onClick={()=>{setPanel('new')}}> + New Expense</button>
                         <button className='action-button back' onClick={()=>{props.setPanel('groups')}}>Go Back</button>   
-                    </div> 
-                    }                
+                    </div>}                                    
                 {panel !== 'expenses' && <button className='action-button back' onClick={()=>{setPanel('expenses')}}> Go Back</button>}
                 </div>
+
+                {panel === 'expenses' && groupInfo.expenses.length === 0 && 
+                    <div className='flex-col'>
+                        <img id='no-expenses' src='https://cdn-icons-png.flaticon.com/512/4076/4076259.png' alt='no expenses'/>
+                        <h3>No expenses recorded!</h3>
+                        <p id='quote'>"The secret of getting ahead is getting started" ~ Mark Twain</p>
+                    </div>
+                }
+                {panel === 'expenses' && groupInfo.expenses.length !== 0 &&
+                    <GroupTotals
+                        key={groupInfo.group_id}
+                        expenses={groupInfo.expenses}
+                        session={props.session}
+                        handleToast={props.handleToast}
+                    />
+                }
 
                 {panel === 'expenses' && groupInfo.expenses.map((expense) => {
                     const lender = helper.capitaliseFirstLetter(expense.lender)
@@ -72,7 +100,7 @@ export const ViewGroup = (props) => {
 
                     return (
                         <>
-                            <div className='expense-line' onClick={()=>{
+                            <div className='expense-line fade-in' onClick={()=>{
                                 setExpense(expense)
                                 setPanel('transactions')
                                 }}> 
@@ -82,15 +110,16 @@ export const ViewGroup = (props) => {
                                     <p className='date-month'>{helper.getMonth(expense.date)}</p>
                                 </div>
                                 <div className='container-icon'>
-                                    <img className='icon' src='https://cdn-icons-png.flaticon.com/512/8100/8100406.png'/>
+                                    
+                                    <img className='icon' src={assignIcon(expense.icon)}/>
                                 </div>
                                 <div className='container-description'>
                                     <p className='description'>{description}</p>
                                     <p className='amount-paid'>{isLender ? 'You paid' : `${lender} paid`} {amountPaid}</p>
                                 </div>
                                 <div className='container-lent'>
-                                    <p className={isLender ? 'user-lender green' : 'user-lender red'}>{isLender ? 'You lent' : 'You borrowed'}</p>
-                                    <p className={isLender ? 'user-portion green' : 'user-portion red'}>{userPortion}</p>
+                                    <p className={userPortion === '$0.00' ? 'user-lender orange' : (isLender ? 'user-lender green' : 'user-lender red')}>{userPortion == '$0.00' ? 'No balance' : isLender ? 'You lent' : 'You borrowed'}</p>
+                                    <p className={isLender ? 'user-portion green' : 'user-portion red'}>{userPortion !== '$0.00' && userPortion}</p>
                                 </div>
                             </div>
                         </>
