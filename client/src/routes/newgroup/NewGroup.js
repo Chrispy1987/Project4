@@ -14,31 +14,28 @@ export const NewGroup = (props) => {
     const handleGroupName = async (event) => {
         const userInput = (event.currentTarget.value).toUpperCase();
         event.currentTarget.value = userInput;
-        if (userInput.length < 3) {
-            event.currentTarget.style.color = 'red'
-            event.currentTarget.style.fontWeight = 'bold'
+        if (userInput.length < 4) {
             props.handleToast('Your group name is too short')
             event.currentTarget.select()
             event.currentTarget.focus()
         } else {
-            event.currentTarget.style.color = 'green'
-            event.currentTarget.style.fontWeight = 'bold'
             const data = {
                 ownerId: props.session,
                 name: userInput,
                 groupId: groupNumber
             }
+            let dbRes;
             try {
-                const dbRes = await axios.post('/groups/new', data)
-                dbRes.data.groupId && setGroupNumber(dbRes.data.groupId)
-                !groupStatus && setGroupStatus(!groupStatus)
-                props.setTriggerGroup(props.triggerGroup + 1)                
+                dbRes = await axios.post('/groups/new', data);              
             } catch(e) {
                 e.response.status === 500 
                     ? props.handleToast('We are having trouble creating the group. Please try again later!')
                     : props.handleToast(e.response.data.toast)
                 return
             }
+            dbRes.data.groupId && setGroupNumber(dbRes.data.groupId);
+            !groupStatus && setGroupStatus(!groupStatus);
+            props.setTriggerGroup(props.triggerGroup + 1);
         }         
     }
 
@@ -69,9 +66,8 @@ export const NewGroup = (props) => {
                 <button className='action-button back' onClick={()=> props.setPanel('groups')}>Go Back</button>
             </div>
             <div className='form-container'>
-                <form>
-                    <span>My group name is... </span>
-                    <input onBlur={event => handleGroupName(event)} id='group-name' name='groupName' placeholder='Enter group name...' maxLength='20'/>
+                <form className='form-col'>
+                    <input className='group-name' onBlur={event => handleGroupName(event)} id='group-name' name='groupName' placeholder='Enter group name...' maxLength='24'/>
                 </form>
                 {groupStatus > 0 && 
                     <div id='invite-container'>
@@ -90,7 +86,7 @@ export const NewGroup = (props) => {
                                 <button>Invite</button>  
                             </form>
                         </div>
-                        <button className='action-button' onClick={()=>props.setPanel('groups')}>FINALISE</button>
+                        <button className='action-button finalise' onClick={()=>props.setPanel('groups')}>FINALISE</button>
                     </div>
                 }
             </div>

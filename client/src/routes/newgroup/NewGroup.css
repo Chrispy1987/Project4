@@ -1,11 +1,17 @@
 .form-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
     padding: 20px 0;
     height: 300px;
     transition: 1s ease all;  
+}
+.form-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 #invite-container {
     opacity: 0;
@@ -21,4 +27,18 @@
 }  
 .invite-form > button {
     margin-left: 5px;
+}
+.group-name {
+    text-align: center;
+    width: auto;
+    outline: none;
+    border: none;
+    font-size: 36px;
+    font-family: 'Fredoka One', cursive;
+    color: var(--pallette-four);
+    margin: 10px 0 20px 0;
+    box-sizing: border-box;
+}
+.finalise {
+    margin-top: 20px;
 }

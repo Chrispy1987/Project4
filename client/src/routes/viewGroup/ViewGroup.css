@@ -50,6 +50,9 @@
     width: 40px;
     height: 40px;
 }
+.container-icon > .icon:hover {
+    background-color: transparent;
+}
 .description {
     font-weight: 500;
 }

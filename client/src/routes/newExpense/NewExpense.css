@@ -5,7 +5,7 @@
     align-items: center;
     height: auto;
     transition: 1s ease all;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 .hide {
     display: none;
@@ -105,12 +105,18 @@
     text-align: center;
 }
 .expense-label {
-    margin-bottom: 10px;
+    margin: 10px;
 }
 @media only screen and (max-width: 500px) {
     .icon-options {
         margin: 30px 20%;
-        text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    .icon-options > label {
+        margin: 10px 5px;
     }
 }
 

@@ -35,7 +35,6 @@ export const NewExpense = (props) => {
 
     const handleNewExpense = async (event) => {
         event.preventDefault();
-
         if (allocated !== total) {
             props.handleToast('You must allocate the entire expense!')
             return
@@ -53,22 +52,16 @@ export const NewExpense = (props) => {
             allocations: formData.getAll('amount'), 
             date: new Date()
         }
-
         if (!data.icon || !data.description || !data.total || !data.users || !data.allocations) {
             props.handleToast('Please complete all fields')
             return
         } 
-
-        console.log(data)
-
         if (data.icon === null) {
             props.handleToast('Please select an expense type')
             return
-        }
-        
+        }        
         try {
             const dbRes = await axios.post('/groups/expense', data)
-            console.log(dbRes)
             props.handleToast(dbRes.data.toast)
         } catch(e) {
             e.response.status === 500 
@@ -98,22 +91,22 @@ export const NewExpense = (props) => {
                 <div className='icon-options'>                    
                     <label onMouseOver={e=>e.currentTarget.children[2].classList.replace('hide', 'reveal')} onMouseLeave={e=>e.currentTarget.children[2].classList.replace('reveal', 'hide')} onClick={()=>{!step && setStep(1)}}>
                         <input className='icon-option' type='radio' name='icon' value='food'/>
-                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/737/737967.png' alt='food icon'/>
+                        <img className='icon' src={props.assignIcon('food')} alt='food icon'/>
                         <div className='hide'>Food & Drink</div>
                     </label>
                     <label onMouseOver={e=>e.currentTarget.children[2].classList.replace('hide', 'reveal')} onMouseLeave={e=>e.currentTarget.children[2].classList.replace('reveal', 'hide')} onClick={()=>{!step && setStep(1)}}>
                         <input className='icon-option' type='radio' name='icon' value='entertainment'/>
-                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/864/864763.png' alt='entertainment icon'/>
+                        <img className='icon' src={props.assignIcon('entertainment')} alt='entertainment icon'/>
                         <div className='hide'>Entertainment</div>
                     </label>
                     <label onMouseOver={e=>e.currentTarget.children[2].classList.replace('hide', 'reveal')} onMouseLeave={e=>e.currentTarget.children[2].classList.replace('reveal', 'hide')} onClick={()=>{!step && setStep(1)}}>
                         <input className='icon-option' type='radio' name='icon' value='transport'/>
-                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/995/995260.png' alt='transport icon'/>
+                        <img className='icon' src={props.assignIcon('transport')} alt='transport icon'/>
                         <div className='hide'>Transport</div>
                     </label>
                     <label onMouseOver={e=>e.currentTarget.children[2].classList.replace('hide', 'reveal')} onMouseLeave={e=>e.currentTarget.children[2].classList.replace('reveal', 'hide')} onClick={()=>{!step && setStep(1)}}>
                         <input className='icon-option' type='radio' name='icon' value='other'/>
-                        <img className='icon' src='https://cdn-icons-png.flaticon.com/512/2521/2521963.png' alt='other icon'/>
+                        <img className='icon' src={props.assignIcon('other')} alt='other icon'/>
                         <div className='hide'>Other</div>
                     </label>
                 </div>
@@ -138,7 +131,7 @@ export const NewExpense = (props) => {
                 {step >= 3 && members && members.map(member => {                    
                     return (
                         <>                                                
-                        <div className='expense-allocation fade-in'>
+                        <div key={member.username} className='expense-allocation fade-in'>
                             <p className='expense-user'>{helper.capitaliseFirstLetter(member.username)}</p>
                             <input type='hidden' name='userId' value={member.user_id}/>
                             <span>$<input onChange={()=>{step < 4 && setStep(4)}} onBlur={e=>handleNumber(e, 'allocate')}className='expense-inputs allocations' type='number' name='amount' placeholder='0.00'/></span>

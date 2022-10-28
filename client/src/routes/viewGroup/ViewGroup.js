@@ -41,8 +41,6 @@ export const ViewGroup = (props) => {
     }
 
     const assignIcon = (icon) => {
-        console.log(icon)
-
         const icons = {
             'food': 'https://cdn-icons-png.flaticon.com/512/737/737967.png',
             'entertainment': 'https://cdn-icons-png.flaticon.com/512/864/864763.png',
@@ -76,10 +74,9 @@ export const ViewGroup = (props) => {
                 }
                 {panel === 'expenses' && groupInfo.expenses.length !== 0 &&
                     <GroupTotals
-                        key={groupInfo.group_id}
+                        key={`group-totals-${groupInfo.group_id}`}
                         expenses={groupInfo.expenses}
                         session={props.session}
-                        handleToast={props.handleToast}
                     />
                 }
 
@@ -109,8 +106,7 @@ export const ViewGroup = (props) => {
                                     <p className='date-day'>{helper.getDay(expense.date)}</p>
                                     <p className='date-month'>{helper.getMonth(expense.date)}</p>
                                 </div>
-                                <div className='container-icon'>
-                                    
+                                <div className='container-icon'>                                    
                                     <img className='icon' src={assignIcon(expense.icon)}/>
                                 </div>
                                 <div className='container-description'>
@@ -127,12 +123,14 @@ export const ViewGroup = (props) => {
                 })}
                 {panel === 'new' &&
                     <>
-                        <NewExpense 
+                        <NewExpense
+                            key = {`new-expense-${groupInfo.group_id}`}
                             groupId = {groupInfo.group_id}
                             session = {props.session}
                             handleToast = {props.handleToast}
                             getGroupInfo = {getGroupInfo}
                             setPanel={setPanel}
+                            assignIcon={assignIcon}
                         />
                     </>
                 }
@@ -140,9 +138,14 @@ export const ViewGroup = (props) => {
                 <>
                     <ViewTransaction 
                         key = {`trans-${expense.expense_id}`}
-                        expense = {expense}
+                        expense={expense}
                         groupId = {groupInfo.group_id}
                         session = {props.session}
+                        getGroupInfo = {getGroupInfo}
+                        setPanel={setPanel}
+                        assignIcon = {assignIcon}
+                        handleToast = {props.handleToast}
+                        
                     />
                 </>
                 }
