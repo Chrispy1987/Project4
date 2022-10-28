@@ -27,7 +27,7 @@ export const ToastAlert = (props) => {
 
     return (
         <div className={`toast-alert ${fadeState}`} onAnimationEnd={() => {
-            console.log("Animation state:", fadeState);
+            // console.log("Animation state:", fadeState);
             if (fadeState === 'fade-out') {
                 setFadeState('off');
                 setTextToDisplay(null);
