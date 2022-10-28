@@ -122,16 +122,20 @@ export const Home = (props) => {
                                     />
                                 )
                             })
-                            : <div>
-                                <p>You are not part of any groups (use image)</p>
+                            : 
+                            <div className='flex-col'>
+                                <img id='no-expenses' src='https://cdn-icons-png.flaticon.com/512/1256/1256661.png' alt='no expenses'/>
+                                <h3>You are not part of any groups!</h3>
+                                <p id='quote'>"Coming together is a beginning. Keeping together is progress. Working together is success." ~ Henry Ford</p>
                                 <button onClick={()=> {props.setPanel('create')}}>CREATE A GROUP</button>
-                                </div>
+                            </div>                            
                             }
                         </>
                     }
                     {props.panel === 'create' &&
                         <>
-                            <NewGroup 
+                            <NewGroup
+                            key={`new-group-${groupNumber}`}
                             session={props.session}
                             handleToast={props.handleToast}
                             triggerGroup={triggerGroup}
