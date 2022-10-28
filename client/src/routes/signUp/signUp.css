@@ -1,10 +1,30 @@
 .signup-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     margin: 0 auto;
     width: 500px;
-    height: 500px; 
-    background-color: pink;
+    height: 250px; 
+}
+#signup-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 200px;
+}
+#signup-form > input {
+    text-align: center;
+    width: 200px;
+    padding: 5px 10px;
+}
+#signup-form > button {
+    padding: 5px 10px;
+    color: white;
+    font-weight: bold;
+    background-color: var(--pallette-three);
+    
+}
+#signup-form > button:hover {
+    background-color: var(--pallette-three-hover);
 }
