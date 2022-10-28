@@ -40,7 +40,7 @@ Here is the initial concept draft:
 
 I am pleased that my original concept database design ended up being the end-product. Allocating extra time to the theoretical planning definitely proved useful in saving time down the line!
 
-![Database design](client/src/Database_design.png "Database design")
+![Database design](client/src/assets/Database_design.png "Database design")
 
 
 ## 🐞 Bugs
