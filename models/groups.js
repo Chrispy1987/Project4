@@ -144,12 +144,38 @@ const Groups = {
     `
   return db.query(sql, [groupId, creator, total, date, icon, description])
   },
+  updateExpense: (total, icon, description, expenseId) => {
+    const sql = `
+    UPDATE expense 
+    SET amount=$1, icon=$2, description=$3
+    WHERE expense_id=$4
+    `
+  return db.query(sql, [total, icon, description, expenseId])
+  },
+  deleteExpense: (expenseId) => {
+    const sql = `
+      DELETE FROM expense 
+      WHERE expense_id=$1
+      `
+    return db.query(sql, [expenseId])
+  },
   allocateBorrowers: (expenseId, user, amount) => {
     const sql = `
     INSERT INTO borrower(expense_id, user_id, amount)
     VALUES($1, $2, $3)
     `
   return db.query(sql, [expenseId, user, amount])
+  },
+  updateBorrowers: (amount, expenseId, userId) => {
+    console.log('AMOUNT', amount)
+    console.log('EXPENSE ID', expenseId)
+    console.log('USER ID', userId)
+    const sql = `
+    UPDATE borrower 
+    SET amount=$1
+    WHERE expense_id=$2 AND user_id=$3
+    `
+  return db.query(sql, [amount, expenseId, userId])
   }
 }
 

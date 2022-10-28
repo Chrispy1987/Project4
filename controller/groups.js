@@ -203,7 +203,7 @@ router.get('/view/:groupId', async (request, response) => {
         ...dbRes.rows[0],
         expenses: transactions
     }
-    console.log('$$$ GROUP DATA $$$', groupData)
+    // console.log('$$$ GROUP DATA $$$', groupData)
     
     return response.json({ success: true, info: groupData })
 });
@@ -238,6 +238,48 @@ router.post('/expense', async (request, response) => {
     }
     
     return response.json({ success: true, toast: 'Expense successfully created!' })
+});
+
+// Handle updating existing expense
+router.patch('/expense', async (request, response) => {
+    const { creator, userId, expenseId, icon, description, total, users, allocations, date } = request.body;
+    let dbRes;
+    try {
+        dbRes = await Groups.updateExpense(Number(total*100), icon, description, expenseId)
+    } catch (e) {
+        console.log(e)
+        return response.status(501).json({ success: false, toast: 'Server error: failed to update expense [Groups.updateExpense]' })
+    }
+
+    try {       
+        await Promise.all(users.map( async (userId, index) => {
+            console.log('creator', creator)
+            console.log('userId', userId)
+            try {
+                if (Number(userId) === creator) return
+                await Groups.updateBorrowers(expenseId, userId, Number(allocations[index]*100))
+            } catch (e) {
+                console.log('ERROR - ALLOCATE BORROWERS', e)
+                return
+            }
+        }))
+    } catch (e) {
+        return response.status(501).json({ success: false, toast: 'Server error: issue update borrowers [Groups.updateBorrowers]' })
+    }
+    
+    return response.json({ success: true, toast: 'Expense successfully updated!' })
+});
+
+// Handle deleting expense line
+router.delete('/expense/:expenseId', async (request, response) => {
+    const expenseId = request.params.expenseId;
+    console.log('DELETING EXPENSE', expenseId)
+    try {
+        await Groups.deleteExpense(expenseId)
+        return response.json({ success: true, toast: 'Expense deleted successfully!'})
+    } catch (e) {
+        return response.status(501).json({ success: false, toast: 'Failed to delete expense [Groups.deleteExpense]' })
+    }
 });
 
 
