@@ -20,25 +20,23 @@ Yewomi is an expense sharing web app, allowing you to create groups with friends
 
 Yewomi is a predominantly single page application built in node.js using the Expressjs framework, hosted by Heroku. The app uses the following node.js packages:
 
-[-] axios
-[-] bcrypt
-[-] connect-pg-simple
-[-] dotenv
-[-] express
-[-] express-session
-[-] react
-[-] react-dom
-[-] react-router-dom
+- axios
+- bcrypt
+- connect-pg-simple
+- dotenv
+- express
+- express-session
+- react
+- react-dom
+- react-router-dom
 
 ## 🧰 Wireframes
 
 I used [Figma](https://www.figma.com/) to design my initial Wireframe concept frames
 
-Some of my original designs are below:
+Here is the initial concept draft:
 
 ![Wireframe 1](/client/src/assets/Wireframe_1.png "Wireframe 1")
-
-![Wireframe 2](client/src/assets/Wireframes_2.png "Wireframe 2")
 
 I am pleased that my original concept database design ended up being the end-product. Allocating extra time to the theoretical planning definitely proved useful in saving time down the line!
 
