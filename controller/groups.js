@@ -224,7 +224,7 @@ router.post('/expense', async (request, response) => {
     try {       
         await Promise.all(users.map( async (user, index) => {
             console.log('creator', creator)
-            console.log('user', user)
+            console.log('user', Number(user))
             try {
                 if (Number(user) === creator) return
                 await Groups.allocateBorrowers(expenseId, user, Number(allocations[index]*100))
@@ -242,7 +242,7 @@ router.post('/expense', async (request, response) => {
 
 // Handle updating existing expense
 router.patch('/expense', async (request, response) => {
-    const { creator, userId, expenseId, icon, description, total, users, allocations, date } = request.body;
+    const { creator, expenseId, icon, description, total, users, allocations } = request.body;
     let dbRes;
     try {
         dbRes = await Groups.updateExpense(Number(total*100), icon, description, expenseId)
@@ -254,9 +254,9 @@ router.patch('/expense', async (request, response) => {
     try {       
         await Promise.all(users.map( async (userId, index) => {
             console.log('creator', creator)
-            console.log('userId', userId)
+            console.log('userId', Number(userId))
             try {
-                if (Number(userId) === creator) return
+                if (userId === creator) return
                 await Groups.updateBorrowers(expenseId, userId, Number(allocations[index]*100))
             } catch (e) {
                 console.log('ERROR - ALLOCATE BORROWERS', e)
