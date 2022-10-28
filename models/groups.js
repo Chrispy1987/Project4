@@ -166,7 +166,7 @@ const Groups = {
     `
   return db.query(sql, [expenseId, user, amount])
   },
-  updateBorrowers: (amount, expenseId, userId) => {
+  updateBorrowers: (expenseId, userId, amount) => {
     console.log('AMOUNT', amount)
     console.log('EXPENSE ID', expenseId)
     console.log('USER ID', userId)
