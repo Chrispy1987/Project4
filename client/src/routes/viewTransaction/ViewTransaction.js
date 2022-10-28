@@ -20,15 +20,10 @@ export const ViewTransaction = (props) => {
     const [allocated, setAllocated] = useState(null)
     const [view, setView] = useState('receipt')
 
-    console.log('VIEWING', props.expense)
-
     useEffect(() => {
         const alreadyAllocated = props.expense.transactions.map(transaction => transaction.amount).reduce((partial, amount) => partial + amount, 0);
-        console.log('already', alreadyAllocated)
         const lendersAllocation = props.expense.amount - alreadyAllocated
-        console.log('lendersallo', lendersAllocation)
         const totalAllocation = alreadyAllocated + lendersAllocation
-        console.log('totalAllo', totalAllocation)
 
         setTotal(props.expense.amount/100)
         setAllocated(totalAllocation/100)
@@ -69,9 +64,6 @@ export const ViewTransaction = (props) => {
             props.handleToast('Please complete all fields')
             return
         } 
-
-        console.log(data)
-
         if (data.icon === null) {
             props.handleToast('Please select an expense type')
             return
@@ -79,7 +71,6 @@ export const ViewTransaction = (props) => {
         
         try {
             const dbRes = await axios.patch('/groups/expense', data)
-            console.log(dbRes)
             props.handleToast(dbRes.data.toast)
         } catch(e) {
             e.response.status === 500 
@@ -104,10 +95,8 @@ export const ViewTransaction = (props) => {
     const handleExpenseDeletion = async (expenseId) => {
         try {
             const dbRes = await axios.delete(`/groups/expense/${expenseId}`)
-            console.log(dbRes)
             props.handleToast(dbRes.data.toast)
         } catch(e) {
-            console.log('8***', e)
             e.response.status === 500 
                 ? props.handleToast('We are having trouble saving your expense. Please try again later!')
                 : props.handleToast(e.response.data.toast)
@@ -121,19 +110,23 @@ export const ViewTransaction = (props) => {
         <>
         {view === 'receipt' &&
         <div className='view-transaction fade-in'>
-            <p className='receipt-heading'>EXPENSE RECEIPT</p>
-            <p>Created by {props.expense.lender_id === props.session ? 'you': helper.capitaliseFirstLetter(props.expense.lender)} on {props.expense.date}</p>
+            <h4 className='receipt-heading receipt'>EXPENSE RECEIPT</h4>
+            
             <div className='receipt-grouping'>
-                <p className='receipt-heading'>Receipt Description</p>
+                <h4 className='receipt-heading'>Creation Date</h4>
+                <p>{helper.getFullDate(props.expense.date)} by {helper.capitaliseFirstLetter(props.expense.lender)}</p>
+            </div>
+            <div className='receipt-grouping'>
+                <h4 className='receipt-heading'>Receipt Description</h4>
                 <p>{helper.capitaliseFirstLetter(props.expense.description)}</p>
             </div>
             <div className='receipt-grouping'>
-                <p className='receipt-heading'>Receipt Total Cost</p>
+                <h4 className='receipt-heading'>Receipt Total Cost</h4>
                 <p>{helper.convertCentsToDollars(props.expense.amount)}</p>
             </div>
 
             <div className='receipt-grouping'>
-                <p className='receipt-heading'>Receipt balances</p>
+                <h4 className='receipt-heading'>Receipt balances</h4>
                 <p>You owe {calcOwingBalance(props.session)}</p>
                 {props.expense.transactions.filter(transaction => transaction.user_id !== props.session).map(transaction => <p>{helper.capitaliseFirstLetter(transaction.borrower)} owes {calcOwingBalance(transaction.user_id)}</p>)}
                 {props.expense.lender_id !== props.session && <p>{helper.capitaliseFirstLetter(props.expense.lender)} owes {calcOwingBalance(props.expense.lender_id)}</p>}
@@ -182,8 +175,6 @@ export const ViewTransaction = (props) => {
 
                 <label htmlFor='amount' className='expense-label'><b>How much does each person owe?</b></label>
                 {props.expense.transactions.map((transaction, index) => {
-                    console.log('TRANSACTION', transaction)
-                    console.log('VALUE', props.expense.transactions[index], index)               
                     return (
                         <>
                         {index === 0 &&
