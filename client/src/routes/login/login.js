@@ -3,6 +3,7 @@ import userIcon from  '../../assets/user_icon.png'
 import pwIcon from '../../assets/pw_icon.png'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
+import { helper } from '../../js/components/helper'
 
 export const Login = (props) => {
     const navigate = useNavigate();
@@ -26,6 +27,7 @@ export const Login = (props) => {
         const response = dbRes.data
         response.userId &&
             props.handleToast(response.toast)
+            helper.setSessionWithExpiry('user_id', response.userId, 3600000)
             props.setSession(response.userId)
             navigate('/')
     }

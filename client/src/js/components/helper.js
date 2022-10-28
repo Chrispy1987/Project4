@@ -9,5 +9,30 @@ export const helper = {
         const month = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
         const d = new Date(date);
         return month[d.getMonth()]
+    },
+    setSessionWithExpiry: (key, userId, ttl) => {
+        const now = new Date();
+        const session = {
+            userId: userId,
+            expiry: now.getTime() + ttl
+        };
+        localStorage.setItem(key, JSON.stringify(session));
+    },
+    getSessionWithExpiry: (key) => {
+        const keyExists = localStorage.getItem(key)
+        // console.log('keyExists', keyExists)
+        // if the item doesn't exist, return null
+        if (!keyExists) {
+            return null
+        };
+        const session = JSON.parse(keyExists);
+        const now = new Date();
+        // compare the expiry time of the item with the current time
+        if (now.getTime() > session.expiry) {
+            localStorage.removeItem(key)
+            return null
+        } else {
+            return session.userId 
+        };        
     }
 };

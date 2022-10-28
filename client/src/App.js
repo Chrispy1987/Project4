@@ -8,9 +8,10 @@ import { SignUp } from './routes/signUp/signUp'
 import { Home } from './routes/home/home'
 import { ToastAlert } from './routes/common/toastAlert'
 import { Logout } from './routes/logout/logout'
+import { helper } from './js/components/helper'
 
 function App() {
-  const [session, setSession] = useState(Number(localStorage.getItem('user_id')))
+  const [session, setSession] = useState(Number(helper.getSessionWithExpiry('user_id')))
   const [toast, setToast] = useState(null)
   const [panel, setPanel] = useState('groups')
 
@@ -25,16 +26,6 @@ function App() {
     return () => {
         clearTimeout(toastTimerId)
     }}, [toast])
-
-  // Tracking state of logged in user
-  useEffect(() => {
-    let userId = Number(localStorage.getItem('user_id'));
-    if (userId === session) {
-      return
-    } else {
-      localStorage.setItem('user_id', session) //store in local in case of page refresh
-    }      
-  }, [session])
 
   const handleToast = toast => {
     toast === 'close' ? setToast(null) : setToast(toast);
