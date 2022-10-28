@@ -65,6 +65,18 @@
 .action-button.back:hover {
     background-color: var(--button-two-hover);
 }
+.create-group {
+    background-color: var(--pallette-two);
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: 0.6s ease all;
+}
+.create-group:hover {
+    background-color: var(--pallette-two-hover);
+}
 
 /* MEDIA QUERIES FOR RESPONSIVE DESIGN */
 @media only screen and (max-width: 1110px) {
