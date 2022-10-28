@@ -3,21 +3,28 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-    height: 400px;
-    /* background-color: yellow; */
+    justify-content: space-between;
 }
 .receipt-heading {
     font-weight: bold;
-    color: var(--pallette-two)
+    color: var(--pallette-two);
+    margin: 15px 0 5px 0;
+}
+.receipt {
+    color: red;
+    font-size: 20px;
+    letter-spacing: 2px;
+    word-spacing: 5px;
 }
 .receipt-grouping {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
     margin-bottom: 10px;
+}
+.receipt-grouping > p {
+    margin: 5px 0;
 }
 .receipt-buttons {
     display: flex;

@@ -127,7 +127,7 @@ export const Home = (props) => {
                                 <img id='no-expenses' src='https://cdn-icons-png.flaticon.com/512/1256/1256661.png' alt='no expenses'/>
                                 <h3>You are not part of any groups!</h3>
                                 <p id='quote'>"Coming together is a beginning. Keeping together is progress. Working together is success." ~ Henry Ford</p>
-                                <button onClick={()=> {props.setPanel('create')}}>CREATE A GROUP</button>
+                                <button className='create-group' onClick={()=> {props.setPanel('create')}}>CREATE A GROUP</button>
                             </div>                            
                             }
                         </>
