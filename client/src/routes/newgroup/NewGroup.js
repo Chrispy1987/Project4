@@ -34,7 +34,6 @@ export const NewGroup = (props) => {
                 return
             }
             dbRes.data.groupId && setGroupNumber(dbRes.data.groupId);
-            !groupStatus && setGroupStatus(!groupStatus);
             props.setTriggerGroup(props.triggerGroup + 1);
         }         
     }
@@ -67,9 +66,9 @@ export const NewGroup = (props) => {
             </div>
             <div className='form-container'>
                 <form className='form-col'>
-                    <input className='group-name' onBlur={event => handleGroupName(event)} id='group-name' name='groupName' placeholder='Enter group name...' maxLength='24'/>
+                    <input className='group-name' onChange={() => !groupStatus && setGroupStatus(!groupStatus)} onBlur={event => handleGroupName(event)} id='group-name' name='groupName' placeholder='Enter group name...' maxLength='24'/>
                 </form>
-                {groupStatus > 0 && 
+                {groupStatus && 
                     <div id='invite-container'>
                         <p>Add up to 3 friends (enter username or email)</p>
                         <div id='invite-forms'>

@@ -83,10 +83,4 @@ router.post('/signup', async (request, response) => {
 
 });
 
-// const data = {
-//     username: formData.get('username'),
-//     email: formData.get('email'),
-//     password: formData.get('password')
-// };
-
 module.exports = router;
